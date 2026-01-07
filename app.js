@@ -1,16 +1,15 @@
-import "dotenv/config";
-import session from "express-session";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "../../generated/prisma/Client";
-import { PrismaSessionStore } from "@quixo3/prisma-session-store";
-import passport from "passport";
-import express from "express";
+const expressSession = require('express-session');
+require('dotenv/config');
+const { PrismaPg } = require('@prisma/adapter-pg');  // For other db adapters, see Prisma docs
+const { PrismaClient } = require('./generated/prisma/client.js');
+const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
+const passport = require("passport");
+const express = require("express");
 const multer  = require('multer')
 const upload = multer({ dest: 'uploads/' })
-import path from ("node:path");
-import router from "./routes/router"
-import pool from "./db/pool"
-import { read } from "node:fs";
+const path = require("node:path");
+const indexRouter = require("./routes/indexRouter");
+// const pool = require("./db.pool")
 const app = express();
 const assetsPath = path.join(__dirname, "public");
 
@@ -22,21 +21,22 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.use(express.static(assetsPath));
-app.unsubscribe(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: false}));
 
 app.use(
-    session({
+    expressSession({
         cookie: {
-            maxAge: 7 * 24 * 60 * 60 * 100 //Seven days
+         
+            maxAge: 7 * 24 * 60 * 60 * 1000 
         },
-        secret: "my secret session",
-        resave: true,
-        saveUninitialized: true,
+        secret: "a santa at nasa",
+        resave: false,
+        saveUninitialized: false,
         store: new PrismaSessionStore(
             prisma,
             {
-                checkPeriod: 2 * 60 * 1000, //2 minutes
-                dbRecordIdSessionId: true,
+                checkPeriod: 2 * 60 * 1000, 
+                dbRecordIdIsSessionId: true, 
                 dbRecordIdFunction: undefined,
             }
         )
@@ -46,7 +46,9 @@ app.use(
 app.use(passport.session());
 
 app.use((req, res, next) => {
-    read.locals.currentUser = req.user;
+    res.locals.currentUser = req.user;
+    console.log("Current User:", req.user); 
+    console.log("Session ID:", req.sessionID);
     next();
 })
 
