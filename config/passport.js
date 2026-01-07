@@ -2,12 +2,13 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const db = require("../db/queries")
+const prisma = require("../lib/prisma")
 
 
 passport.use(
-    new LocalStrategy(async (id, password, done) => {
+    new LocalStrategy(async (username, password, done) => {
         try {
-            const user = await db.getUser(id);
+            const user = await db.getUserByUsername(username);
             console.log('User at login', user)
                 if(!user) {
                     return done(null, false, {message: "No such user"})
@@ -30,7 +31,9 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
     try {
-        const user = await db.getUser(id);
+       const user = await prisma.user.findUnique({
+      where: { id },
+    });
         done(null, user);
     } catch(err) {
         done(err)

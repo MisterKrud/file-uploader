@@ -10,7 +10,7 @@ const prisma = require("../lib/prisma")
         password: password,
         folders: {
             create: {
-                name: "default",
+                name: `${name}'s desktop`,
             }
         }
     },
@@ -37,6 +37,7 @@ const prisma = require("../lib/prisma")
           username: username
         }
       })
+      console.log('Get user by username', user)
       return user
     }
   // async function updateUser(userId, name, username){

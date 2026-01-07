@@ -1,0 +1,116 @@
+
+body{
+  font-family:monospace
+}
+
+h1, h2, h3, h4, h5, p{
+
+}
+table {
+
+  border-collapse: collapse; 
+  border: rgb(219, 219, 219) 1px solid;   
+  box-shadow: 2px 2px 2px rgb(219, 219, 219);        
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+
+}
+
+
+
+tbody tr:nth-child(even) {
+  background-color: #edf5f7;
+}
+
+
+tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+tbody tr:hover{
+  background-color: rgb(199, 212, 230);
+}
+
+button{
+  border: none;
+  padding: .5rem;
+  margin: .5rem;
+  box-shadow: 1px 1px 2px rgb(189, 189, 189);
+}
+
+button:hover{
+   background-color: white;
+}
+
+button:active{
+  transform: translate(1px);
+}
+
+add-form{
+  padding: 2rem;
+}
+
+input{
+  box-shadow: 1px 1px 1px rgb(189, 189, 189);;
+  border: .1px solid rgb(189, 189, 189);;
+  padding: .5rem;
+  margin: 1rem;
+  display: block;
+}
+
+input:hover, input:active{
+  background-color: #edf5f7;
+}
+ label{
+    padding: 1rem;
+ }
+
+.loginHeader{
+    display: flex;
+    align-items: baseline;
+    justify-content:space-around;
+} 
+
+.loginHeader>h3, .loginHeader>p, .loginHeader>a{
+    margin: 1rem;
+}
+.styles-brands-admin{
+  display: flex;
+  /* justify-content: space-around; */
+}
+
+.brand-style-block{
+  display: flex;
+  flex-direction:column;
+ 
+  margin: 1rem auto;
+align-items: center;
+}
+
+.add-form{
+  justify-self: flex-end;
+}
+
+
+
+a{
+
+}
+
+nav{
+  margin: 1rem;
+}
+
+body{
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+}
+
+hr{
+ height: .01rem;
+ width: 100%;
+}

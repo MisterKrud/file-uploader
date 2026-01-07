@@ -49,9 +49,7 @@ app.use(
 app.use(passport.session());
 
 app.use((req, res, next) => {
-    res.locals.currentUser = req.user;
-    console.log("Current User:", req.user); // Should show the user object
-    console.log("Session ID:", req.sessionID);
+    res.locals.user = req.user;
     next();
 })
 
