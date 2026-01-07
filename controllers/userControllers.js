@@ -32,7 +32,8 @@ const userValidator =[
        req.login(newUser, (err) => {
         if(err) return next(err);
         return res.redirect("/")
-       })
+       })//
+    // res.redirect("/")
     }
  ]
 

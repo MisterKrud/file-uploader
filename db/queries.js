@@ -1,7 +1,8 @@
-import { prisma } from '../lib/prisma.js'
+const prisma = require("../lib/prisma")
 
 
-   export async function createUser(username, name, password){
+
+  async function createUser(username, name, password){
      const user =  await prisma.user.create({
     data: {
         username: username,
@@ -21,7 +22,7 @@ import { prisma } from '../lib/prisma.js'
     }
 
 
-    export async function getUser(userid){
+ async function getUser(userid){
       const user = await prisma.user.findUnique({
         where: {
           id: userid
@@ -30,7 +31,7 @@ import { prisma } from '../lib/prisma.js'
       return user
     }
 
-    export async function getUserByUsername(username){
+  async function getUserByUsername(username){
       const user = await prisma.user.findUnique({
         where: {
           username: username
@@ -38,7 +39,7 @@ import { prisma } from '../lib/prisma.js'
       })
       return user
     }
-  // export  async function updateUser(userId, name, username){
+  // async function updateUser(userId, name, username){
   //     await prisma.user.update({
   //       where: {
   //         id: userId,
@@ -50,7 +51,7 @@ import { prisma } from '../lib/prisma.js'
   //     })
   //   }
 
-  // export  async function updateUserPassword(userId, password){
+  // async function updateUserPassword(userId, password){
   //     await prisma.user.update({
   //       where: {
   //         id: userId,
@@ -61,7 +62,7 @@ import { prisma } from '../lib/prisma.js'
   //     })
   //   }
 
-  //  export async function makeAdmin(userId) {
+  //  async function makeAdmin(userId) {
   //     await prisma.user.update({
   //   where: {
   //     id: userId,
@@ -72,7 +73,7 @@ import { prisma } from '../lib/prisma.js'
   // })
   //   }
 
-  //  export async function deleteUser(userId) {
+  //  async function deleteUser(userId) {
   //     await prisma.user.delete({
   //       where: {
   //         id: userId
@@ -80,8 +81,11 @@ import { prisma } from '../lib/prisma.js'
   //     })
   //   }
 
-
-  
+module.exports ={
+  createUser,
+  getUser,
+  getUserByUsername
+}
 
 
 

@@ -1,21 +1,24 @@
-const expressSession = require('express-session');
 require('dotenv/config');
-const { PrismaPg } = require('@prisma/adapter-pg');  // For other db adapters, see Prisma docs
-const { PrismaClient } = require('./generated/prisma/client.js');
-const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
-const passport = require("passport");
 const express = require("express");
+const expressSession = require('express-session');
+const passport = require("passport");
 const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
 const path = require("node:path");
+const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
+
+const prisma = require("./lib/prisma");
+
+
+const upload = multer({ dest: 'uploads/' })
+
 const indexRouter = require("./routes/indexRouter");
 // const pool = require("./db.pool")
 const app = express();
 const assetsPath = path.join(__dirname, "public");
 
-const connectionString = "${process.env.DATABASE_URL}"
-const adapter = new PrismaPg({ connectionString});
-const prisma = new PrismaClient({ adapter });
+// const connectionString = process.env.DATABASE_URL
+// const adapter = new PrismaPg({ connectionString});
+
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -47,7 +50,7 @@ app.use(passport.session());
 
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
-    console.log("Current User:", req.user); 
+    console.log("Current User:", req.user); // Should show the user object
     console.log("Session ID:", req.sessionID);
     next();
 })
