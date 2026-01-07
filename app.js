@@ -5,6 +5,8 @@ import { PrismaClient } from "../../generated/prisma/Client";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import passport from "passport";
 import express from "express";
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 import path from ("node:path");
 import router from "./routes/router"
 import pool from "./db/pool"

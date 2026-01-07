@@ -2,31 +2,60 @@ import { prisma } from './lib/prisma.js'
 
 async function main() {
   // Create a new user with a post
+
+//   const createRoles = await prisma.role.createMany({
+//     data: [
+//         {name: "user"},
+//         {name: "admin"},
+//         {name: "manager"},
+//     ],
+//     skipDuplicates: true,
+//   })
+
   const user = await prisma.user.create({
     data: {
-      name: 'Alice',
-      email: 'alice@prisma.io',
-      posts: {
-        create: {
-          title: 'Hello World',
-          content: 'This is my first post!',
-          published: true,
-        },
-      },
+        username: "fake@fakemail.com",
+        name: "Fake",
+        password: "fake",
+        folders: {
+            create: {
+                name: "default",
+            }
+        }
     },
     include: {
-      posts: true,
+        folders: true
     },
   })
-  console.log('Created user:', user)
 
-  // Fetch all users with their posts
-  const allUsers = await prisma.user.findMany({
-    include: {
-      posts: true,
-    },
-  })
-  console.log('All users:', JSON.stringify(allUsers, null, 2))
+  console.log("Created user:", user)
+
+
+//   const user = await prisma.user.create({
+//     data: {
+//       name: 'Alice',
+//       email: 'alice@prisma.io',
+//       posts: {
+//         create: {
+//           title: 'Hello World',
+//           content: 'This is my first post!',
+//           published: true,
+//         },
+//       },
+//     },
+//     include: {
+//       posts: true,
+//     },
+//   })
+//   console.log('Created user:', user)
+
+//   // Fetch all users with their posts
+//   const allUsers = await prisma.user.findMany({
+//     include: {
+//       posts: true,
+//     },
+//   })
+//   console.log('All users:', JSON.stringify(allUsers, null, 2))
 }
 
 main()
