@@ -66,6 +66,10 @@ input:hover, input:active{
     padding: 1rem;
  }
 
+ a{
+  text-decoration: none;
+  font-weight: bold;
+ }
 
  .upload-form{
   align-self: flex-start;

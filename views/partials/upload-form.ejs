@@ -5,13 +5,13 @@
       <form class="upload-file" action="<%=parentFolder.id%>/upload" method="post" enctype="multipart/form-data">
    
   <input type="file" name="avatar" />
-  <input type="submit" value="upload">
+  <button type="submit"><i class="fa-solid fa-upload"></i> Upload</button>
 </form>
 <hr>
 <h3>Create Folder</h3>
 <form class="create-folder" action="/create-folder" method="POST">
   <label for="folderName">Folder name</label>
   <input type="text" name="folderName" id="folderName">
-  <button type="submit">Create folder</button>
+  <button type="submit"><i class="fa-solid fa-plus"></i> Create folder</button>
 </form>
 </div>

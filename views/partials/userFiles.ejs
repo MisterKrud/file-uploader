@@ -1,4 +1,7 @@
 <div class="user-files">
+    <% if(parentFolder.id != locals.user.deskTopFolderId) { %>
+        <a class="back-button" href="/"><i class="fa-solid fa-circle-arrow-left"></i> Back</a>
+    <% } %>
     <% if(locals.files) { %>
        <% files.forEach(file => {%>
         <figure>

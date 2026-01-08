@@ -4,7 +4,7 @@ const userController = require("../controllers/userControllers")
 const passport = require("../config/passport")
 const multer = require("multer");
 const { DbNull } = require("@prisma/client/runtime/client");
-const db = require("../db/queries");
+
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
