@@ -55,5 +55,7 @@ router.get("/upload-form", (req, res) => res.render("upload-form"))
 
 router.post("/profile", upload.single("avatar"), userController.uploadFile)
 
+router.post("/create-folder", userController.createFolder)
+
 
 module.exports = router

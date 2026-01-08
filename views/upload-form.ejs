@@ -6,9 +6,17 @@
     <title>Upload a file</title>
 </head>
 <body>
+  <h3>Upload</h3>
     <form action="/profile" method="post" enctype="multipart/form-data">
   <input type="file" name="avatar" />
   <input type="submit" value="upload">
+</form>
+<hr>
+<h3>Create Folder</h3>
+<form action="/create-folder" method="POST">
+  <label for="folderName">Folder name</label>
+  <input type="text" name="folderName" id="folderName">
+  <button type="submit">Create folder</button>
 </form>
 </body>
 </html>

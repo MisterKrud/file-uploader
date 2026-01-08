@@ -43,8 +43,14 @@ const userValidator =[
    console.log(req.user.id)
    console.log(req.file)
    return res.send("file uploaded")
+ }
 
+   const createFolder = async (req, res) =>{
+      const parentFolderId = await db.getUserDesktopFolder(req.user.id)
+      const newFolder = await db.createUserFolder(req.user.id, req.body.folderName, parentFolderId)
+      return res.send(newFolder)
    }
+   
  
  
 
@@ -56,7 +62,8 @@ const userValidator =[
 
  module.exports = { 
    createUser,
-   uploadFile 
+   uploadFile ,
+   createFolder
 }
  
 
