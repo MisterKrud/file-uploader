@@ -55,15 +55,19 @@ router.get("/logout", (req, res, next) => {
     
 })
 
-router.get("/:folderId", userController.getFilesInParentFolder)
+router.get("/:folderId", userController.getAllFoldersAndFiles)
 
 router.post("/createUser", userController.createUser)
 
 router.get("/upload-form", (req, res) => res.render("upload-form"))
 
-router.post("/:id/upload", upload.single("avatar"), userController.uploadFile)
+router.post("/upload", upload.single("avatar"), userController.uploadFileIntoFolder)
+
+router.post("/:id/upload", upload.single("avatar"), userController.uploadFileIntoFolder)
 
 router.post("/create-folder", userController.createFolder)
+
+
 
 
 module.exports = router

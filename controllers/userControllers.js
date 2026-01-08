@@ -51,10 +51,28 @@ const userValidator =[
  ]
 
 
- const uploadFile = async (req, res, next) =>{
-  console.log('req body', req.body)
-  console.log('req params', req.params)
-   await db.uploadFile(Number(req.params.id), req.file.originalname, req.file.filename, req.file.size)
+ const uploadFileIntoFolder = async (req, res, next) =>{
+   console.log(req.params)
+  const folderId = req.params.id
+  try{
+   if(req.file) {
+   await db.uploadFile(Number(folderId), req.file.originalname, req.file.filename, req.file.size)
+   console.log(req.user.id)
+   console.log(req.file)
+  
+   return res.redirect(`/${folderId}`)
+   } else {
+      res.send("No file chosen. Click 'back' and try again")
+   }
+  } catch(err) {
+   next(err);
+ }
+}
+
+  const uploadFileIntoDesktopFolder = async (req, res, next) =>{
+   const desktopFolder = await db.getUserDesktopFolder(req.user.id)
+   console.log('desktopFolder',desktopFolder)
+   await db.uploadFile(Number(desktopFolder.id), req.file.originalname, req.file.filename, req.file.size)
    console.log(req.user.id)
    console.log(req.file)
   
@@ -64,17 +82,24 @@ const userValidator =[
 
  const getAllFoldersAndFiles = async (req, res, next)=> {
    if(req.user){
-   const parentFolder = await db.getUserDesktopFolder(req.user.id);
-   const files = await db.getAllFilesInFolder(parentFolder.id )
+      let parentFolder
+      if(req.params.folderId){
+         console.log(req.params)
+      parentFolder = await db.getParentFolder(Number(req.params.folderId))
+     
+      } else {
+  parentFolder = await db.getUserDesktopFolder(req.user.id);
+    
+      }
+      console.log('parent folder', parentFolder)
+   const files = await db.getAllFilesInFolder(parentFolder.id)
    const folders = await db.getAllUserFolders(parentFolder.id)
-   console.log(files)
-   console.log(folders)
-   console.log(req.files)
-   console.log(req.folders)
+
 
    return res.render("index", {
       files: files,
-      folders: folders
+      folders: folders,
+      parentFolder: parentFolder
    })
 } else {
    console.log('No user logged in')
@@ -97,7 +122,7 @@ const userValidator =[
    const createFolder = async (req, res) =>{
       const parentFolder = await db.getUserDesktopFolder(req.user.id)
       const newFolder = await db.createUserFolder(req.user.id, req.body.folderName, parentFolder.id)
-      return res.send(newFolder)
+      return res.redirect("/")
    }
    
  
@@ -111,7 +136,8 @@ const userValidator =[
 
  module.exports = { 
    createUser,
-   uploadFile ,
+   uploadFileIntoDesktopFolder,
+   uploadFileIntoFolder,
    createFolder, 
    getAllFoldersAndFiles,
    getFilesInParentFolder,
