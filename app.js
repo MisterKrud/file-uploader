@@ -2,16 +2,17 @@ require('dotenv/config');
 const express = require("express");
 const expressSession = require('express-session');
 const passport = require("passport");
-const multer  = require('multer')
+const middleware = require("./controllers/userControllers")
 const path = require("node:path");
 const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
 
 const prisma = require("./lib/prisma");
 
 
-const upload = multer({ dest: 'uploads/' })
+// const upload = multer({ dest: 'uploads/' })
 
 const indexRouter = require("./routes/indexRouter");
+const folderRouter = require("./routes/folderRouter");
 // const pool = require("./db.pool")
 const app = express();
 const assetsPath = path.join(__dirname, "public");
@@ -47,13 +48,15 @@ app.use(
 )
 
 app.use(passport.session());
+app.use(middleware.userDesktopFolder)
 
 app.use((req, res, next) => {
     res.locals.user = req.user;
     next();
 })
-
+// app.use("/folders", folderRouter)
 app.use("/", indexRouter);
+
 
 const PORT = process.env.PORT || 3000
 

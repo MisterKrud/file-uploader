@@ -1,0 +1,14 @@
+<div class="upload-form">
+  <h3>Upload</h3>
+    <form class="upload-file" action="/<%=locals.folders.id%>/upload" method="post" enctype="multipart/form-data">
+  <input type="file" name="avatar" />
+  <input type="submit" value="upload">
+</form>
+<hr>
+<h3>Create Folder</h3>
+<form class="create-folder" action="/create-folder" method="POST">
+  <label for="folderName">Folder name</label>
+  <input type="text" name="folderName" id="folderName">
+  <button type="submit">Create folder</button>
+</form>
+</div>

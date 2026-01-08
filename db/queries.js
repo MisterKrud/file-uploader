@@ -44,6 +44,15 @@ async function uploadFile(folderid, filename, storagekey, size) {
     return desktopFolder
   }
 
+  async function getParentFolder(folderid){
+    const parentFolder = await prisma.folder.findUnique({
+      where: {
+        id: folderid
+      }
+    })
+    return parentFolder
+  }
+
   async function createUserFolder(userid, name, parentfolderid) {
     const folder = await prisma.folder.create({
       data: {
@@ -65,7 +74,8 @@ async function uploadFile(folderid, filename, storagekey, size) {
     return userFolder.id
   }
 
-  async function getAllUserFiles(parentFolderId){
+  async function getAllFilesInFolder(parentFolderId){
+  
     const files = await prisma.file.findMany({
       where: {
         
@@ -74,6 +84,24 @@ async function uploadFile(folderid, filename, storagekey, size) {
     })
     return files
   }
+
+  async function getAllUserFolders(parentFolderId){
+    const folders = await prisma.folder.findMany({
+      where: {
+        parentFolderId: parentFolderId,
+      }
+    }) 
+    return folders
+  }
+
+  // async function getAllUserFolders(userId){
+  //   const folders = await prisma.folder.findMany({
+  //     where: {
+  //       userId: userId
+  //     }
+  //   })
+  //   return folders
+  // }
 
  async function getUser(userid){
       const user = await prisma.user.findUnique({
@@ -143,9 +171,11 @@ module.exports = {
   getUserByUsername,
   uploadFile,
   getUserDesktopFolder,
+  getParentFolder,
   getUserFolderByName,
   createUserFolder,
-  getAllUserFiles
+  getAllFilesInFolder,
+  getAllUserFolders
 }
 
 

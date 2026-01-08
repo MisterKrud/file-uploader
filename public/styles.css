@@ -66,6 +66,14 @@ input:hover, input:active{
     padding: 1rem;
  }
 
+
+ .upload-form{
+  align-self: flex-start;
+  
+ }
+
+
+
 .loginHeader{
     display: flex;
     align-items: baseline;
@@ -93,6 +101,7 @@ align-items: center;
 }
 .user-files{
   display:flex;
+  flex-wrap: wrap;
 }
 .thumbnail{
   height: 6rem;

@@ -17,7 +17,9 @@
         <h3><%=locals.user.name%>'s files</h3>
     <%}%>
     <a href="/logout">Log out</a>
+    <%-include("partials/userFolders")%>
     <%-include("partials/userFiles")%>
+    <%-include("partials/upload-form")%>
     
 </body>
 </html>

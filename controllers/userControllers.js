@@ -2,6 +2,20 @@ const bcrypt = require("bcryptjs");
 require("dotenv").config()
 const db = require("../db/queries");
 const {body, validationResult, matchedData } = require("express-validator");
+const { localsName } = require("ejs");
+
+const userDesktopFolder = async(req, res, next)=> {
+   if(!req.user) return next()
+
+      try {
+         const deskTopFolder = await db.getUserDesktopFolder(req.user.id)
+         req.user.deskTopFolderId = deskTopFolder.id
+         next()
+      } catch (err) {
+         next(err)
+      }
+} 
+
 
 const userValidator =[
     body("name").trim(),
@@ -38,8 +52,9 @@ const userValidator =[
 
 
  const uploadFile = async (req, res, next) =>{
-   const folder = await db.getUserDesktopFolder(req.user.id)
-   await db.uploadFile(folder.id, req.file.originalname, req.file.filename, req.file.size)
+  console.log('req body', req.body)
+  console.log('req params', req.params)
+   await db.uploadFile(Number(req.params.id), req.file.originalname, req.file.filename, req.file.size)
    console.log(req.user.id)
    console.log(req.file)
   
@@ -47,19 +62,36 @@ const userValidator =[
    // next();
  }
 
- const getAllUserFiles = async (req, res, next)=> {
+ const getAllFoldersAndFiles = async (req, res, next)=> {
    if(req.user){
    const parentFolder = await db.getUserDesktopFolder(req.user.id);
-   const files = await db.getAllUserFiles(parentFolder.id )
+   const files = await db.getAllFilesInFolder(parentFolder.id )
+   const folders = await db.getAllUserFolders(parentFolder.id)
    console.log(files)
+   console.log(folders)
    console.log(req.files)
+   console.log(req.folders)
+
    return res.render("index", {
-      files: files
+      files: files,
+      folders: folders
    })
 } else {
    console.log('No user logged in')
    res.render("index")
 }
+ }
+
+ const getFilesInParentFolder = async (req, res) => {
+   console.log(req.params)
+   const parentFolder = await db.getParentFolder(Number(req.params.folderId))
+  console.log('req.folders',req.folders)
+   const files = await db.getAllFilesInFolder(parentFolder.id)
+   return res.render("index", {
+      files: files,
+      folders: parentFolder,
+      
+   })
  }
 
    const createFolder = async (req, res) =>{
@@ -81,7 +113,9 @@ const userValidator =[
    createUser,
    uploadFile ,
    createFolder, 
-   getAllUserFiles
+   getAllFoldersAndFiles,
+   getFilesInParentFolder,
+   userDesktopFolder
 }
  
 

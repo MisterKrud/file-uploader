@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage: storage});
 
-router.get("/", userController.getAllUserFiles)
+router.get("/", userController.getAllFoldersAndFiles)
 
 // router.get("/",async (req, res) => {
 //      console.log("SESSION:", req.session);
@@ -55,13 +55,13 @@ router.get("/logout", (req, res, next) => {
     
 })
 
-
+router.get("/:folderId", userController.getFilesInParentFolder)
 
 router.post("/createUser", userController.createUser)
 
 router.get("/upload-form", (req, res) => res.render("upload-form"))
 
-router.post("/upload", upload.single("avatar"), userController.uploadFile)
+router.post("/:id/upload", upload.single("avatar"), userController.uploadFile)
 
 router.post("/create-folder", userController.createFolder)
 
