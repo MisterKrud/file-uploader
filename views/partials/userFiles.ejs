@@ -1,0 +1,12 @@
+<div class="user-files">
+    <% if(locals.files) { %>
+       <% files.forEach(file => {%>
+        <figure>
+         <img class="thumbnail" src="uploads/<%=file.name%>">
+         <figcaption><%=file.name%></figcaption>
+         </figure>
+       <%  })%>
+    
+    <%}%>
+</div>
+

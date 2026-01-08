@@ -37,24 +37,41 @@ const userValidator =[
  ]
 
 
- const uploadFile = async (req, res) =>{
-   const folderid = await db.getUserDesktopFolder(req.user.id)
-   await db.uploadFile(folderid, req.file.originalname, req.file.filename, req.file.size)
+ const uploadFile = async (req, res, next) =>{
+   const folder = await db.getUserDesktopFolder(req.user.id)
+   await db.uploadFile(folder.id, req.file.originalname, req.file.filename, req.file.size)
    console.log(req.user.id)
    console.log(req.file)
-   return res.send("file uploaded")
+  
+   return res.redirect("/")
+   // next();
+ }
+
+ const getAllUserFiles = async (req, res, next)=> {
+   if(req.user){
+   const parentFolder = await db.getUserDesktopFolder(req.user.id);
+   const files = await db.getAllUserFiles(parentFolder.id )
+   console.log(files)
+   console.log(req.files)
+   return res.render("index", {
+      files: files
+   })
+} else {
+   console.log('No user logged in')
+   res.render("index")
+}
  }
 
    const createFolder = async (req, res) =>{
-      const parentFolderId = await db.getUserDesktopFolder(req.user.id)
-      const newFolder = await db.createUserFolder(req.user.id, req.body.folderName, parentFolderId)
+      const parentFolder = await db.getUserDesktopFolder(req.user.id)
+      const newFolder = await db.createUserFolder(req.user.id, req.body.folderName, parentFolder.id)
       return res.send(newFolder)
    }
    
  
  
 
- const getUser = async(req, res) => {
+ const getUser = async(req, res,) => {
     const userId = req.params.id
     const user = await db.getUser(userId)
     return res.send(user)
@@ -63,7 +80,8 @@ const userValidator =[
  module.exports = { 
    createUser,
    uploadFile ,
-   createFolder
+   createFolder, 
+   getAllUserFiles
 }
  
 

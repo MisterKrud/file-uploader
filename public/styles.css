@@ -91,8 +91,18 @@ align-items: center;
 .add-form{
   justify-self: flex-end;
 }
+.user-files{
+  display:flex;
+}
+.thumbnail{
+  height: 6rem;
+  display: block;
+  margin: auto;
+}
 
-
+figure{
+  text-align: center;
+}
 
 nav{
   margin: 1rem;

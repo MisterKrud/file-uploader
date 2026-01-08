@@ -4,10 +4,11 @@ const userController = require("../controllers/userControllers")
 const passport = require("../config/passport")
 const multer = require("multer");
 const { DbNull } = require("@prisma/client/runtime/client");
+const db = require("../db/queries");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "uploads")
+        cb(null, "./public/uploads")
     },
     filename: (res, file, cb) =>{
         cb(null, file.originalname)
@@ -16,11 +17,16 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage: storage});
 
-router.get("/", (req, res) => {
-     console.log("SESSION:", req.session);
-  console.log("REQ.USER:", req.user);
-    res.render("index");
-});
+router.get("/", userController.getAllUserFiles)
+
+// router.get("/",async (req, res) => {
+//      console.log("SESSION:", req.session);
+//   console.log("REQ.USER:", req.user);
+ 
+ 
+// //   res.send(req.body)
+//     res.render("index");
+// });
 
 router.get("/login", (req, res) => res.render("login"))
 router.get("/signup", (req, res) => res.render("signup"))
@@ -49,11 +55,13 @@ router.get("/logout", (req, res, next) => {
     
 })
 
+
+
 router.post("/createUser", userController.createUser)
 
 router.get("/upload-form", (req, res) => res.render("upload-form"))
 
-router.post("/profile", upload.single("avatar"), userController.uploadFile)
+router.post("/upload", upload.single("avatar"), userController.uploadFile)
 
 router.post("/create-folder", userController.createFolder)
 
