@@ -32,10 +32,21 @@ const userValidator =[
        req.login(newUser, (err) => {
         if(err) return next(err);
         return res.redirect("/")
-       })//
-    // res.redirect("/")
+       })
     }
  ]
+
+
+ const uploadFile = async (req, res) =>{
+   const folderid = await db.getUserDesktopFolder(req.user.id)
+   await db.uploadFile(folderid, req.file.originalname, req.file.filename, req.file.size)
+   console.log(req.user.id)
+   console.log(req.file)
+   return res.send("file uploaded")
+
+   }
+ 
+ 
 
  const getUser = async(req, res) => {
     const userId = req.params.id
@@ -43,6 +54,9 @@ const userValidator =[
     return res.send(user)
  }
 
- module.exports = { createUser }
+ module.exports = { 
+   createUser,
+   uploadFile 
+}
  
 

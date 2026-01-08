@@ -52,6 +52,7 @@ model File {
   id Int @id @default(autoincrement())
   folder Folder @relation(fields:[folderId], references:[id])
   folderId Int
+  name String
   storageKey String
   createdAt DateTime @default(now())
   size Int 

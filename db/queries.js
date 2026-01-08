@@ -1,8 +1,7 @@
 const prisma = require("../lib/prisma")
 
 
-
-  async function createUser(username, name, password){
+async function createUser(username, name, password){
      const user =  await prisma.user.create({
     data: {
         username: username,
@@ -20,6 +19,30 @@ const prisma = require("../lib/prisma")
   })
   return user
     }
+
+async function uploadFile(folderid, filename, storagekey, size) {
+    const file = await prisma.file.create({
+      data: {
+        name: filename,
+        folderId: folderid,
+        storageKey: storagekey,
+        size: size
+      }
+    })
+    // return file
+  }
+
+  async function getUserDesktopFolder(userid) {
+    const desktopFolder = await prisma.folder.findFirst({
+      where: {
+        userId: userid
+      },
+      orderBy: {
+        id: "asc"
+      }
+    })
+    return desktopFolder.id
+  }
 
 
  async function getUser(userid){
@@ -82,10 +105,14 @@ const prisma = require("../lib/prisma")
   //     })
   //   }
 
-module.exports ={
+
+ 
+module.exports = {
   createUser,
   getUser,
-  getUserByUsername
+  getUserByUsername,
+  uploadFile,
+  getUserDesktopFolder
 }
 
 
