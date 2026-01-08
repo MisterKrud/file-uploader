@@ -67,6 +67,9 @@ router.post("/:id/upload", upload.single("avatar"), userController.uploadFileInt
 
 router.post("/create-folder", userController.createFolder)
 
+router.post("/:id/delete-file", userController.deleteFile)
+
+router.post("/:id/updateFileName", userController.updateFileName)
 
 
 

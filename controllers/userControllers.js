@@ -84,7 +84,7 @@ const userValidator =[
    if(req.user){
       let parentFolder
       if(req.params.folderId){
-         console.log(req.params)
+         console.log('getallfoldersandfiles req params',req.params)
       parentFolder = await db.getParentFolder(Number(req.params.folderId))
      
       } else {
@@ -125,13 +125,34 @@ const userValidator =[
       return res.redirect("/")
    }
    
- 
- 
 
  const getUser = async(req, res,) => {
     const userId = req.params.id
     const user = await db.getUser(userId)
     return res.send(user)
+ }
+
+ //update
+ const updateFileName = async(req, res) => {
+   // const file = await db.getFile(Number(req.params.id))
+   // const folderId = file.folderId
+   console.log('req.params', req.params)
+   console.log('req body', req.body)
+   console.log('req query', req.query)
+ }
+
+ //delete
+ const deleteFile = async(req, res) => {
+   console.log('req params', req.params.id)
+  
+
+
+   const fileId = Number(req.params.id)
+   const file = await db.getFile(fileId)
+   const folderId = file.folderId
+   console.log('Deleting file', file)
+   await db.deleteFile(fileId)
+   res.redirect(`/${folderId}`)
  }
 
  module.exports = { 
@@ -141,7 +162,9 @@ const userValidator =[
    createFolder, 
    getAllFoldersAndFiles,
    getFilesInParentFolder,
-   userDesktopFolder
+   userDesktopFolder, 
+   deleteFile,
+   updateFileName
 }
  
 

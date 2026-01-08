@@ -6,8 +6,16 @@
        <% files.forEach(file => {%>
         <figure>
          <img class="thumbnail" src="uploads/<%=file.name%>">
-         <figcaption><%=file.name%></figcaption>
+
+         <figcaption><form action="/<%=file.id%>/updateFileName" method="POST">
+
+         <input type="text" name="update-filename" id="update-filename" value="<%=file.name%>"></form></figcaption>
+        <form action="/<%=file.id%>/delete-file" method="POST">
+   
+            <button type="submit" class="delete-file">❌</button>
+         </form>
          </figure>
+         
        <%  })%>
     
     <%}%>

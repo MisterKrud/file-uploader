@@ -121,6 +121,20 @@ async function uploadFile(folderid, filename, storagekey, size) {
       console.log('Get user by username', user)
       return user
     }
+
+
+//update
+async function updateFileName(fileid, newName){
+  const file = await prisma.file.update({
+    where: {
+      id: fileid
+    },
+    data: {
+      name: newName
+    }
+  })
+}
+
   // async function updateUser(userId, name, username){
   //     await prisma.user.update({
   //       where: {
@@ -163,7 +177,22 @@ async function uploadFile(folderid, filename, storagekey, size) {
   //     })
   //   }
 
+  async function getFile(fileid){
+    const file = await prisma.file.findUnique({
+      where: {
+        id: fileid
+      }
+    })
+    return file
+  }
 
+async function deleteFile(fileid){
+  const deleteFile = await prisma.file.delete({
+    where: {
+      id: fileid
+    }
+  })
+}
  
 module.exports = {
   createUser,
@@ -175,7 +204,10 @@ module.exports = {
   getUserFolderByName,
   createUserFolder,
   getAllFilesInFolder,
-  getAllUserFolders
+  getAllUserFolders,
+  deleteFile,
+  getFile,
+  updateFileName,
 }
 
 
