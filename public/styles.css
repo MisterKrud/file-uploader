@@ -69,6 +69,15 @@ input:hover, input:active{
  a{
   text-decoration: none;
   font-weight: bold;
+  padding: 1rem;
+ }
+
+ i{
+  font-size: 2rem;
+ }
+
+ .fa-folder{
+  color: #4a90e2;
  }
 
  .upload-form{
@@ -111,6 +120,11 @@ align-items: center;
   height: 6rem;
   display: block;
   margin: auto;
+}
+.user-folders{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 figure{
