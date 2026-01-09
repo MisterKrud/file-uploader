@@ -107,6 +107,36 @@ const userValidator =[
 }
  }
 
+
+
+const getAllFoldersAndFilesEdit = async (req, res, next)=> {
+   if(req.user){
+      let parentFolder
+      if(req.params.folderId){
+         console.log('getallfoldersandfiles req params',req.params)
+      parentFolder = await db.getParentFolder(Number(req.params.folderId))
+     
+      } else {
+  parentFolder = await db.getUserDesktopFolder(req.user.id);
+    
+      }
+      console.log('parent folder', parentFolder)
+   const files = await db.getAllFilesInFolder(parentFolder.id)
+   const folders = await db.getAllUserFolders(parentFolder.id)
+
+
+   return res.render("edit-files", {
+      files: files,
+      folders: folders,
+      parentFolder: parentFolder
+   })
+} else {
+   console.log('No user logged in')
+   res.render("/")
+}
+ }
+
+
  const getFilesInParentFolder = async (req, res) => {
    console.log(req.params)
    const parentFolder = await db.getParentFolder(Number(req.params.folderId))
@@ -134,13 +164,16 @@ const userValidator =[
 
  //update
  const updateFileName = async(req, res) => {
-   // const file = await db.getFile(Number(req.params.id))
-   // const folderId = file.folderId
-   console.log('req.params', req.params)
-   console.log('req body', req.body)
-   console.log('req query', req.query)
- }
+   const file = await db.getFile(Number(req.params.id))
+   const folderId = file.folderId
+   console.log('Updating file name')
+      await db.updateFileName(file.id,req.body.filename)
+      console.log(file)
+   return res.redirect(`/${folderId}`)
+   
+   
 
+ }
  //delete
  const deleteFile = async(req, res) => {
    console.log('req params', req.params.id)
@@ -155,6 +188,8 @@ const userValidator =[
    res.redirect(`/${folderId}`)
  }
 
+
+
  module.exports = { 
    createUser,
    uploadFileIntoDesktopFolder,
@@ -164,7 +199,8 @@ const userValidator =[
    getFilesInParentFolder,
    userDesktopFolder, 
    deleteFile,
-   updateFileName
+   updateFileName,
+   getAllFoldersAndFilesEdit
 }
  
 

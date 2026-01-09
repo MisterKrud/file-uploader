@@ -1,0 +1,43 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit files</title>
+</head>
+<body>
+    <h3>Editing <%=locals.user.name%>'s files</h3>
+    <div class="user-files">
+    <% if(parentFolder.id != locals.user.deskTopFolderId) { %>
+        <a class="back-button" href="/"><i class="fa-solid fa-circle-arrow-left"></i> Back</a>
+    <% } %>
+    <% if(locals.files) { %>
+       <% files.forEach(file => {%>
+        <figure>
+         <img class="thumbnail" src="uploads/<%=file.storageKey%>">
+<form action="/<%=file.id%>/update-filename" method="POST" class="update-filename-form">
+         <input type="text" name="filename" value="<%=file.name%>">
+         <button type="submimt">save</button>
+            </form>
+       
+       
+      
+        <form action="/<%=file.id%>/delete-file" method="POST">
+   
+            <button type="submit" class="delete-file">❌</button>
+         </form>
+         </figure>
+         
+       <%  })%>
+    
+    <%}%>
+</div>
+</body>
+</html>
+

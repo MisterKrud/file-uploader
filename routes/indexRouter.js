@@ -30,6 +30,7 @@ router.get("/", userController.getAllFoldersAndFiles)
 
 router.get("/login", (req, res) => res.render("login"))
 router.get("/signup", (req, res) => res.render("signup"))
+router.get("/edit-files", userController.getAllFoldersAndFilesEdit)
 
 router.get("/failure", (req, res) => res.render("failure"))
 
@@ -69,7 +70,7 @@ router.post("/create-folder", userController.createFolder)
 
 router.post("/:id/delete-file", userController.deleteFile)
 
-router.post("/:id/updateFileName", userController.updateFileName)
+router.post("/:id/update-filename", userController.updateFileName)
 
 
 
