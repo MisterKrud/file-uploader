@@ -56,7 +56,7 @@ const userValidator =[
   const folderId = req.params.id
   try{
    if(req.file) {
-   await db.uploadFile(Number(folderId), req.file.originalname, req.file.filename, req.file.size)
+   await db.uploadFile(Number(folderId), req.file.originalname, req.file.filename, req.file.size, req.file.mimetype)
    console.log(req.user.id)
    console.log(req.file)
   
