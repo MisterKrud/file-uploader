@@ -79,12 +79,12 @@ button:active{
   font-size: .7rem;
 }
 
-.update-filename-form{
+.update-name-form{
   display: flex;
   padding: 0;
   align-items: baseline;
 }
-.update-filename-form>button, .update-filename-form>input{
+.update-name-form>button, .update-name-form>input{
   /* padding: 0 .5rem; */
   height: fit-content;
   margin: 0.3rem 0;
@@ -266,7 +266,7 @@ figcaption{
   text-decoration: none;
 }
 
-.edit-filename{
+.edit-name{
   width: 7rem;
 }
 nav{
@@ -282,4 +282,19 @@ body{
 hr{
  height: .01rem;
  width: 100%;
+}
+
+.delete-folder-only{
+  background-color: rgb(223, 111, 111);
+}
+
+.delete-folder-and-files{
+  background-color: firebrick;
+  color: white;
+}
+
+.delete-folder-only:hover, .delete-folder-and-files:hover{
+  font-weight: bold;
+  color: black;
+  border: firebrick 1px solid;
 }

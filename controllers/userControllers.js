@@ -229,7 +229,17 @@ const updateFolderName = async(req, res) => {
    }
   
 
-
+const deleteFolderAndFiles = async(req, res, next) =>{
+         
+      const folderId = Number(req.params.folderId)
+      const folder = await db.getFolder(folderId)
+      const parentFolderId = folder.parentFolderId
+     
+      await db.deleteFolderAndFiles(folderId)
+      console.log('Deleting folder and files', folder)
+      res.redirect(`/${parentFolderId}`)
+    
+   }
 
  module.exports = { 
    createUser,
@@ -244,7 +254,8 @@ const updateFolderName = async(req, res) => {
    updateFileName,
    getAllFoldersAndFilesEdit,
    getFilesInParentFolderEdit,
-   updateFolderName
+   updateFolderName,
+   deleteFolderAndFiles
 }
  
 

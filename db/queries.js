@@ -234,6 +234,21 @@ async function moveFilesToParent(folderId, parentFolderId){
   })
 }
  
+
+async function deleteFolderAndFiles(folderId){
+  const deleteFiles = await prisma.file.deleteMany({
+    where: {
+      folderId: folderId
+    }
+  })
+  const deleteFolder = await prisma.folder.delete({
+    where: {
+      id: folderId
+    }
+  })
+}
+
+
 module.exports = {
   createUser,
   getUser,
@@ -251,7 +266,8 @@ module.exports = {
   updateFolderName,
   deleteFolder,
   getFolder,
-  moveFilesToParent
+  moveFilesToParent,
+  deleteFolderAndFiles
 }
 
 

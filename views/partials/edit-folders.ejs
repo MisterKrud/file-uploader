@@ -6,14 +6,19 @@
        <% folders.forEach(folder => {%>
         <div class="folders">
          <div class="edit-tile"><i class="fa-solid fa-folder lg-folder"></i>
-         <form action="/<%=folder.id%>/update-foldername" method="POST" class="update-foldername-form">
-         <input class="edit-foldername" type="text" name="foldername" value="<%=folder.name%>">
+         <form action="/<%=folder.id%>/update-foldername" method="POST" class="update-name-form">
+         <input class="edit-name" type="text" name="foldername" class="update-name-form" value="<%=folder.name%>">
          <button type="submit">save</button>
             </form>
              <form action="/<%=folder.id%>/delete-folder" method="POST">
    
-            <button type="submit" class="delete-folder">❌</button>
+            <button type="submit" class = "delete-folder-only">Delete and keep files</button>
+            </form>
+            <form action="/<%=folder.id%>/delete-folder-files" method="POST">
+   
+            <button type="submit" class="delete-folder-and-files">Delete folder and files</button>
          </form>
+         
          </div>
          </div>
        <%  })%>
