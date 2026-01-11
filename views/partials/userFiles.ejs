@@ -1,20 +1,25 @@
 <div class="user-files">
+     
     <% if(parentFolder.id != locals.user.deskTopFolderId) { %>
         <a class="back-button" href="/"><i class="fa-solid fa-circle-arrow-left"></i> Back</a>
+       
     <% } %>
     <% if(locals.files) { %>
        <% files.forEach(file => {%>
-        <figure>
+      
+     
+            <figure>
+          <a href="uploads/<%=file.storageKey%>" download class="download">
          <img class="thumbnail" src="uploads/<%=file.storageKey%>">
 
          <figcaption>
-            <%=file.name%>
+           <%=file.name%> 
          </figcaption>
        
       
-        
+        <i class="fa-solid fa-download"></i>
          </figure>
-         
+        </a>    
        <%  })%>
     
     <%}%>

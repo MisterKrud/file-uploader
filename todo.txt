@@ -1,9 +1,0 @@
-
-1. Delete buttons for files and folders 
-2. View with more details (size file type etc)
-3. Add icons for:
-    -folders
-    -file types (generic for non image?)
-4. Connect cloudinary
-    -add file url into the database
-5. Share folders

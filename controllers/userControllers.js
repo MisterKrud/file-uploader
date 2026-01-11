@@ -110,17 +110,21 @@ const userValidator =[
 
 
 const getAllFoldersAndFilesEdit = async (req, res, next)=> {
+   console.log('RUNNING: getAllFoldersAndFilesedit + REQ.PARAMS',req.params)
+  
    if(req.user){
       let parentFolder
-      if(req.params.folderId){
-         console.log('getallfoldersandfiles req params',req.params)
-      parentFolder = await db.getParentFolder(Number(req.params.folderId))
      
+      if(req.params.folderId){
+         // console.log('getallfoldersandfiles req params',req.params)
+      parentFolder = await db.getParentFolder(Number(req.params.folderId))
+     console.log('Sub-folder')
+      console.log(parentFolder.id)
       } else {
   parentFolder = await db.getUserDesktopFolder(req.user.id);
-    
+    console.log('Desktop', parentFolder.id)
       }
-      console.log('parent folder', parentFolder)
+      // console.log('parent folder', parentFolder)
    const files = await db.getAllFilesInFolder(parentFolder.id)
    const folders = await db.getAllUserFolders(parentFolder.id)
 
@@ -138,11 +142,24 @@ const getAllFoldersAndFilesEdit = async (req, res, next)=> {
 
 
  const getFilesInParentFolder = async (req, res) => {
-   console.log(req.params)
+   // console.log(req.params)
    const parentFolder = await db.getParentFolder(Number(req.params.folderId))
-  console.log('req.folders',req.folders)
+//   console.log('req.folders',req.folders)
    const files = await db.getAllFilesInFolder(parentFolder.id)
    return res.render("index", {
+      files: files,
+      folders: parentFolder,
+      
+   })
+ }
+
+  const getFilesInParentFolderEdit = async (req, res) => {
+   // console.log('getFilesInParentFolder req.query:')
+   // console.log(req.params)
+   const parentFolder = await db.getParentFolder(Number(req.params.folderId))
+//   console.log('req.folders',req.folders)
+   const files = await db.getAllFilesInFolder(parentFolder.id)
+   return res.render("edit-files", {
       files: files,
       folders: parentFolder,
       
@@ -200,7 +217,8 @@ const getAllFoldersAndFilesEdit = async (req, res, next)=> {
    userDesktopFolder, 
    deleteFile,
    updateFileName,
-   getAllFoldersAndFilesEdit
+   getAllFoldersAndFilesEdit,
+   getFilesInParentFolderEdit
 }
  
 

@@ -69,7 +69,10 @@ button:active{
 }
 .delete-file:hover{
   font-size: 1rem;
-  background-color: honeydew;
+  background-color: rgb(248, 197, 197);
+  padding: .4rem;
+  border-radius: 50%;
+  color: white;
 }
 
 .delete-file:active{
@@ -146,12 +149,43 @@ input:hover, input:active{
   color: #4a90e2;
  }
 
+ .fa-download{
+  color:dimgray;
+  font-size: 1.4rem;
+  /* margin-left: .5rem; */
+  position:absolute;
+  top: 0;
+  left: 0.2rem;
+  margin-top: .2rem;
+ }
+/* 
+ .file-icon-container{
+  width: 100px;
+  margin: 2rem;
+  border: gray solid 1px;
+  display: flex;
+  justify-content: center;
+ } */
+
  .upload-form{
   align-self: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   
  }
 
+ .upload-file, .create-folder{
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+ 
+ }
 
+ .create-folder>input{
+  display: inline;
+ }
 
 .loginHeader{
     display: flex;
@@ -181,6 +215,7 @@ align-items: center;
 .user-files{
   display:flex;
   flex-wrap: wrap;
+  /* justify-content: space-evenly; */
 }
 .thumbnail{
   height: 6rem;
@@ -188,8 +223,9 @@ align-items: center;
   display: block;
   margin: auto;
   position: relative;
+  object-fit: cover;
  border: .1rem solid rgb(240, 240, 240);
- box-shadow: 1px 1px 2px gray;
+ /* box-shadow: 1px 1px 2px gray; */
 }
 .user-folders{
   display: flex;
@@ -200,12 +236,35 @@ align-items: center;
 figure{
   text-align: center;
   position: relative;
+   width: 200px;
+  margin: 2rem;
+  box-shadow: 2px 2px 4px 2px #c9c9c9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 1rem;
+  align-items: center;
+}
+
+figure:hover{
+  background-color:rgb(199, 212, 230);
+}
+
+figure:hover>.fa-download{
+  color: white;
 }
 
 figcaption{
   padding: .2rem;
 }
 
+.download{
+  text-decoration: none;
+}
+
+.edit-filename{
+  width: 7rem;
+}
 nav{
   margin: 1rem;
 }

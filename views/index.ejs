@@ -25,13 +25,14 @@
         <h3><%=locals.user.name%>'s files</h3>
     
     <a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</a>
+    <a href="/<%=parentFolder.id%>/edit-files"> <i class="fa-solid fa-pen-to-square"></i> Edit files</a>
 
     <%-include("partials/userFolders")%>
 
     
     <%-include("partials/userFiles")%>
     <%-include("partials/upload-form")%>
-    <a class="link-button" href="/edit-files">Edit</a>
+    
     <%}%>
 </body>
 </html>

@@ -57,6 +57,7 @@ router.get("/logout", (req, res, next) => {
 })
 
 router.get("/:folderId", userController.getAllFoldersAndFiles)
+router.get("/:folderId/edit-files", userController.getAllFoldersAndFilesEdit)
 
 router.post("/createUser", userController.createUser)
 
