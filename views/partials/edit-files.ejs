@@ -1,0 +1,29 @@
+<div class="user-files">
+   
+     
+    <% if(locals.files) { %>
+        
+       <% files.forEach(file => {%>
+      
+      
+        <figure>
+              <img class="thumbnail" src="../uploads/<%=file.storageKey%>">
+        
+<form action="/<%=file.id%>/update-filename" method="POST" class="update-filename-form">
+         <input class="edit-filename" type="text" name="filename" value="<%=file.name%>">
+         <button type="submit">save</button>
+            </form>
+       
+       
+      
+        <form action="/<%=file.id%>/delete-file" method="POST">
+   
+            <button type="submit" class="delete-file">❌</button>
+         </form>
+         </figure>
+         
+       <%  })%>
+    
+    <%}%>
+
+</div>

@@ -187,14 +187,23 @@ const getAllFoldersAndFilesEdit = async (req, res, next)=> {
       await db.updateFileName(file.id,req.body.filename)
       console.log(file)
    return res.redirect(`/${folderId}`)
-   
-   
-
  }
+
+
+const updateFolderName = async(req, res) => {
+   const folder = await db.getFolder(Number(req.params.id))
+   const parentFolderId = folder.parentFolderId
+   await db.updateFolderName(Number(req.params.id), req.body.folderName)
+   return res.redirect(`/${parentFolderId}`)
+}
+
+
+
  //delete
  const deleteFile = async(req, res) => {
    console.log('req params', req.params.id)
-  
+   // await db.deleteFile()
+
 
 
    const fileId = Number(req.params.id)
@@ -204,6 +213,21 @@ const getAllFoldersAndFilesEdit = async (req, res, next)=> {
    await db.deleteFile(fileId)
    res.redirect(`/${folderId}`)
  }
+
+ 
+   const deleteFolder = async(req, res, next) => {
+      
+      
+      const folderId = Number(req.params.folderId)
+      const folder = await db.getFolder(folderId)
+      const parentFolderId = folder.parentFolderId
+      await db.moveFilesToParent(folderId, parentFolderId)
+      await db.deleteFolder(folderId)
+      console.log('Deleting folder', folder)
+      res.redirect(`/${parentFolderId}`)
+    
+   }
+  
 
 
 
@@ -216,9 +240,11 @@ const getAllFoldersAndFilesEdit = async (req, res, next)=> {
    getFilesInParentFolder,
    userDesktopFolder, 
    deleteFile,
+   deleteFolder,
    updateFileName,
    getAllFoldersAndFilesEdit,
-   getFilesInParentFolderEdit
+   getFilesInParentFolderEdit,
+   updateFolderName
 }
  
 

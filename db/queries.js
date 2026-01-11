@@ -122,12 +122,32 @@ async function uploadFile(folderid, filename, storagekey, size) {
       return user
     }
 
+    async function getFolder(folderid) {
+      const folder = await prisma.folder.findUnique({
+        where: {
+          id: folderid
+        }
+      })
+      return folder
+    }
+
 
 //update
 async function updateFileName(fileid, newName){
   const file = await prisma.file.update({
     where: {
       id: fileid
+    },
+    data: {
+      name: newName
+    }
+  })
+}
+
+async function updateFolderName(folderid, newName){
+  const folder = await prisma.folder.update({
+    where: {
+      id: folderid
     },
     data: {
       name: newName
@@ -193,6 +213,26 @@ async function deleteFile(fileid){
     }
   })
 }
+
+async function deleteFolder(folderid){
+  const deleteFolder = await prisma.folder.delete({
+    where: {
+      id: folderid
+    }
+  })
+}
+
+async function moveFilesToParent(folderId, parentFolderId){
+  
+  const updateFiles = await prisma.file.updateMany({
+    where: {
+      folderId: folderId
+    },
+    data: {
+      folderId: parentFolderId
+    }
+  })
+}
  
 module.exports = {
   createUser,
@@ -208,6 +248,10 @@ module.exports = {
   deleteFile,
   getFile,
   updateFileName,
+  updateFolderName,
+  deleteFolder,
+  getFolder,
+  moveFilesToParent
 }
 
 

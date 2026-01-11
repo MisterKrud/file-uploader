@@ -13,38 +13,13 @@
 </head>
 <body>
     <h3>Editing <%=locals.user.name%>'s files</h3>
-    
-    <div class="user-files">
-    <% if(parentFolder.id != locals.user.deskTopFolderId) { %>
+     <% if(parentFolder.id != locals.user.deskTopFolderId) { %>
        
         <h5><i class="fa-regular fa-folder-open"></i> ...<%=parentFolder.name%> </h5>
     <% } %>
      <a class="back-button" href="/"><i class="fa-solid fa-circle-arrow-left"></i> Back</a>
-    <% if(locals.files) { %>
-        
-       <% files.forEach(file => {%>
-      
-      
-        <figure>
-              <img class="thumbnail" src="../uploads/<%=file.storageKey%>">
-        
-<form action="/<%=file.id%>/update-filename" method="POST" class="update-filename-form">
-         <input class="edit-filename" type="text" name="filename" value="<%=file.name%>">
-         <button type="submimt">save</button>
-            </form>
-       
-       
-      
-        <form action="/<%=file.id%>/delete-file" method="POST">
-   
-            <button type="submit" class="delete-file">❌</button>
-         </form>
-         </figure>
-         
-       <%  })%>
-    
-    <%}%>
-</div>
+    <%-include("partials/edit-folders")%>
+    <%-include("partials/edit-files")%>
 </body>
 </html>
 

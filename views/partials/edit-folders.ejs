@@ -1,0 +1,24 @@
+  <% if(Array.isArray(folders)) { %>
+<div class="user-folders">
+
+
+  
+       <% folders.forEach(folder => {%>
+        <div class="folders">
+         <div class="edit-tile"><i class="fa-solid fa-folder lg-folder"></i>
+         <form action="/<%=folder.id%>/update-foldername" method="POST" class="update-foldername-form">
+         <input class="edit-foldername" type="text" name="foldername" value="<%=folder.name%>">
+         <button type="submit">save</button>
+            </form>
+             <form action="/<%=folder.id%>/delete-folder" method="POST">
+   
+            <button type="submit" class="delete-folder">❌</button>
+         </form>
+         </div>
+         </div>
+       <%  })%>
+    
+  
+</div>
+  <%}%>
+

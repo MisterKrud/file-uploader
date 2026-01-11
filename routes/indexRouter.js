@@ -16,6 +16,10 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({storage: storage});
+router.use((req, res, next) => {
+  console.log(req.method, req.path)
+  next()
+})
 
 router.get("/", userController.getAllFoldersAndFiles)
 
@@ -72,6 +76,9 @@ router.post("/create-folder", userController.createFolder)
 router.post("/:id/delete-file", userController.deleteFile)
 
 router.post("/:id/update-filename", userController.updateFileName)
+router.post("/:folderId/delete-folder", userController.deleteFolder)
+
+router.post("/:folderId/update-foldername", userController.updateFolderName)
 
 
 
