@@ -28,6 +28,15 @@ const cloudinaryDelete = async(req, res, next) => {
    console.log(req.body)
    next()
 }
+
+const cloudinaryDeleteAllFolderFiles = async(req, res, next) => {
+   const parentFolder = await db.getParentFolder(Number(req.params.folderId))
+   const files = await db.getAllFilesInFolder(parentFolder.id)
+   const fileAssetIds = []
+   files.forEach(file => fileAssetIds.push(file.storageKey))
+   await cloudinary.api.delete_resources_by_asset_ids(fileAssetIds)
+   next()
+}
   
   
 
@@ -304,7 +313,8 @@ const deleteFolderAndFiles = async(req, res, next) =>{
    getFilesInParentFolderEdit,
    updateFolderName,
    deleteFolderAndFiles,
-   cloudinaryDelete
+   cloudinaryDelete,
+   cloudinaryDeleteAllFolderFiles
 }
  
 
