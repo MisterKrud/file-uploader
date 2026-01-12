@@ -20,13 +20,14 @@ async function createUser(username, name, password){
   return user
     }
 
-async function uploadFile(folderid, filename, storagekey, size, type) {
+async function uploadFile(folderid, filename, storagekey, size, pathway, type) {
     const file = await prisma.file.create({
       data: {
         name: filename,
         folderId: folderid,
         storageKey: storagekey,
         size: size,
+        pathway: pathway,
         mimeType: type,
       }
     })

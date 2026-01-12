@@ -1,8 +1,37 @@
 const bcrypt = require("bcryptjs");
 require("dotenv").config()
+const cloudinary = require("../config/cloudinary")
 const db = require("../db/queries");
 const {body, validationResult, matchedData } = require("express-validator");
 const { localsName } = require("ejs");
+
+const cloudinaryUpload = async(req, res, next) => {
+   try{
+   const result = await cloudinary.uploader.upload(req.file.path) 
+   req.upload = result
+   console.log('cloudinary result', req.file.path)
+   console.log(result)
+   next()
+     }  catch(err) {
+         console.log(err);
+         return res.status(500).json({
+            success: false,
+            message: "Error uploading to Cloudinary"
+         })
+      }
+       
+   }
+
+const cloudinaryDelete = async(req, res, next) => {
+   const file = await db.getFile(Number(req.params.id))
+   await cloudinary.api.delete_resources_by_asset_ids([file.storageKey])
+   console.log(req.body)
+   next()
+}
+  
+  
+
+
 
 const userDesktopFolder = async(req, res, next)=> {
    if(!req.user) return next()
@@ -56,9 +85,26 @@ const userValidator =[
   const folderId = req.params.id
   try{
    if(req.file) {
-   await db.uploadFile(Number(folderId), req.file.originalname, req.file.filename, req.file.size, req.file.mimetype)
+   // cloudinary.uploader.upload(req.file.path, function(err, result) {
+   //    if(err) {
+   //       console.log(err);
+   //       return res.status(500).json({
+   //          success: false,
+   //          message: "Error uploading to Cloudinary"
+   //       })
+   //    }
+   //    return res.status(200).json({
+   //       success: true,
+   //       message: "File uploaded",
+   //       data: result
+   //    })
+   // })
+   
+   await db.uploadFile(Number(folderId), req.file.originalname, req.upload.asset_id, req.file.size, req.upload.url, req.file.mimetype)
    console.log(req.user.id)
+   console.log(req.user.path)
    console.log(req.file)
+   // console.log('uploaded file', uploadedFile)
   
    return res.redirect(`/${folderId}`)
    } else {
@@ -72,10 +118,11 @@ const userValidator =[
   const uploadFileIntoDesktopFolder = async (req, res, next) =>{
    const desktopFolder = await db.getUserDesktopFolder(req.user.id)
    console.log('desktopFolder',desktopFolder)
+   const uploadedFile = cloudinaryUpload()
    await db.uploadFile(Number(desktopFolder.id), req.file.originalname, req.file.filename, req.file.size)
    console.log(req.user.id)
    console.log(req.file)
-  
+  console.log(uploadedFile)
    return res.redirect("/")
    // next();
  }
@@ -242,6 +289,7 @@ const deleteFolderAndFiles = async(req, res, next) =>{
    }
 
  module.exports = { 
+   cloudinaryUpload,
    createUser,
    uploadFileIntoDesktopFolder,
    uploadFileIntoFolder,
@@ -255,7 +303,8 @@ const deleteFolderAndFiles = async(req, res, next) =>{
    getAllFoldersAndFilesEdit,
    getFilesInParentFolderEdit,
    updateFolderName,
-   deleteFolderAndFiles
+   deleteFolderAndFiles,
+   cloudinaryDelete
 }
  
 

@@ -1,5 +1,6 @@
 const { Router } = require("express")
 const router = Router();
+const cloudinary = require("../config/cloudinary")
 const userController = require("../controllers/userControllers")
 const passport = require("../config/passport")
 const multer = require("multer");
@@ -7,9 +8,9 @@ const { DbNull } = require("@prisma/client/runtime/client");
 
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "./public/uploads")
-    },
+    // destination: (req, file, cb) => {
+    //     cb(null, "./public/uploads")
+    // },
     filename: (res, file, cb) =>{
         cb(null, file.originalname)
     }
@@ -67,13 +68,13 @@ router.post("/createUser", userController.createUser)
 
 router.get("/upload-form", (req, res) => res.render("upload-form"))
 
-router.post("/upload", upload.single("avatar"), userController.uploadFileIntoFolder)
+router.post("/upload", upload.single("avatar"), userController.cloudinaryUpload, userController.uploadFileIntoFolder)
 
-router.post("/:id/upload", upload.single("avatar"), userController.uploadFileIntoFolder)
+router.post("/:id/upload", upload.single("avatar"), userController.cloudinaryUpload, userController.uploadFileIntoFolder)
 
 router.post("/create-folder", userController.createFolder)
 
-router.post("/:id/delete-file", userController.deleteFile)
+router.post("/:id/delete-file", userController.cloudinaryDelete, userController.deleteFile)
 
 router.post("/:id/update-filename", userController.updateFileName)
 router.post("/:folderId/delete-folder", userController.deleteFolder)
