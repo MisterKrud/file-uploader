@@ -1,4 +1,4 @@
-const { prisma } = require('../db/prisma')
+const { prisma } = require('../lib/prisma')
 const bcrypt = require('bcryptjs')
 
 async function main() {
@@ -9,8 +9,8 @@ async function main() {
 
   const user = await prisma.user.create({
     data: {
-      email: 'allyn.m.smith@gmail.com',
-      username: 'Allyn',
+      email: 'user@email.com',
+      username: 'User',
       password: passwordHash,
     },
   })
