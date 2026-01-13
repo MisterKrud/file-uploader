@@ -1,6 +1,7 @@
 public/uploads/
 todo.md
 
+/migrations/seed.js
 
 # Logs
 logs
