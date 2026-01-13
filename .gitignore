@@ -1,7 +1,6 @@
 public/uploads/
 todo.md
-
-/migrations/seed.js
+/seed.js
 
 # Logs
 logs
@@ -143,6 +142,4 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-/generated/prisma
 
-/generated/prisma
