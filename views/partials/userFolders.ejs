@@ -1,19 +1,10 @@
- 
- <div class="user-folders">
-
-<% if(Array.isArray(folders)) { %>
-
-
-
-  
-       <% folders.forEach(folder => {%>
-        <div class="edit-tile">
-         <a href="/<%=folder.id%>"><i class="fa-solid fa-folder lg-folder"></i> <br> <%=folder.name%></a>
-         </div>
-       <%  })%>
-    
-  
-
-  <%}%>
+<div class="user-folders">
+  <% if(Array.isArray(folders)) { %> <% folders.forEach(folder => {%>
+  <div class="edit-tile">
+    <a href="/<%=folder.id%>"
+      ><i class="fa-solid fa-folder lg-folder"></i> <br />
+      <%=folder.name%></a
+    >
   </div>
-
+  <% })%> <%}%>
+</div>

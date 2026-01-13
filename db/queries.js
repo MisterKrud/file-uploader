@@ -20,8 +20,19 @@ async function createUser(username, name, password){
   return user
     }
 
-async function uploadFile(folderid, filename, storagekey, size, pathway, type) {
-    const file = await prisma.file.create({
+
+async function uploadFile(folderid, filename, storagekey, size, pathway, type, userId) {
+  const folder = await prisma.folder.findUnique({
+    where:{
+      id: folderid,
+     userId: userId
+    }
+  })
+  if(!folder){
+    throw new Error("Access denied")
+  }
+
+    const file = await prisma.file.create({   
       data: {
         name: filename,
         folderId: folderid,
@@ -30,11 +41,11 @@ async function uploadFile(folderid, filename, storagekey, size, pathway, type) {
         pathway: pathway,
         mimeType: type,
       }
-    })
-    // return file
+    })  
   }
 
-  async function getUserDesktopFolder(userid) {
+
+  async function getUserDesktopFolder(userid) {  
     const desktopFolder = await prisma.folder.findFirst({
       where: {
         userId: userid
@@ -46,14 +57,20 @@ async function uploadFile(folderid, filename, storagekey, size, pathway, type) {
     return desktopFolder
   }
 
-  async function getParentFolder(folderid){
+
+  async function getParentFolder(folderid, userId){
     const parentFolder = await prisma.folder.findUnique({
       where: {
-        id: folderid
+        id: folderid,
+        userId: userId 
       }
     })
+    if(!parentFolder){
+      throw new Error("Access denied")
+    }
     return parentFolder
   }
+
 
   async function createUserFolder(userid, name, parentfolderid) {
     const folder = await prisma.folder.create({
@@ -66,6 +83,7 @@ async function uploadFile(folderid, filename, storagekey, size, pathway, type) {
     return folder
   }
 
+
   async function getUserFolderByName(userid, foldername) {
     const userFolder = await prisma.folder.findUnique({
       where: {
@@ -73,37 +91,42 @@ async function uploadFile(folderid, filename, storagekey, size, pathway, type) {
         name: foldername,
       }
     })
+    if(userid !== req.user.id){
+      throw new Error("Access denied")
+    }
     return userFolder.id
   }
 
-  async function getAllFilesInFolder(parentFolderId){
-  
+
+  async function getAllFilesInFolder(parentFolderId, userId){
+    const folder = await prisma.folder.findUnique({
+      where: {
+        id: parentFolderId,
+        userId: userId
+      }
+    })
+    if(!folder){
+      throw new Error("Access denied")
+    }
     const files = await prisma.file.findMany({
       where: {
-        
         folderId: parentFolderId
       }
     })
     return files
   }
 
+
   async function getAllUserFolders(parentFolderId){
     const folders = await prisma.folder.findMany({
       where: {
         parentFolderId: parentFolderId,
+     
       }
     }) 
     return folders
   }
 
-  // async function getAllUserFolders(userId){
-  //   const folders = await prisma.folder.findMany({
-  //     where: {
-  //       userId: userId
-  //     }
-  //   })
-  //   return folders
-  // }
 
  async function getUser(userid){
       const user = await prisma.user.findUnique({
@@ -113,6 +136,7 @@ async function uploadFile(folderid, filename, storagekey, size, pathway, type) {
       })
       return user
     }
+
 
   async function getUserByUsername(username){
       const user = await prisma.user.findUnique({
@@ -124,10 +148,12 @@ async function uploadFile(folderid, filename, storagekey, size, pathway, type) {
       return user
     }
 
+
     async function getFolder(folderid) {
       const folder = await prisma.folder.findUnique({
         where: {
-          id: folderid
+          id: folderid,
+          userId: req.user.id
         }
       })
       return folder
@@ -157,48 +183,6 @@ async function updateFolderName(folderid, newName){
   })
 }
 
-  // async function updateUser(userId, name, username){
-  //     await prisma.user.update({
-  //       where: {
-  //         id: userId,
-  //       },
-  //       data: {
-  //         name: name,
-  //         username: username,
-  //       }
-  //     })
-  //   }
-
-  // async function updateUserPassword(userId, password){
-  //     await prisma.user.update({
-  //       where: {
-  //         id: userId,
-  //       },
-  //       data: {
-  //         password: password
-  //       }
-  //     })
-  //   }
-
-  //  async function makeAdmin(userId) {
-  //     await prisma.user.update({
-  //   where: {
-  //     id: userId,
-  //       },
-  //       data: {
-  //         role_id: 2
-  //       }
-  // })
-  //   }
-
-  //  async function deleteUser(userId) {
-  //     await prisma.user.delete({
-  //       where: {
-  //         id: userId
-  //       }
-  //     })
-  //   }
-
   async function getFile(fileid){
     const file = await prisma.file.findUnique({
       where: {
@@ -208,6 +192,7 @@ async function updateFolderName(folderid, newName){
     return file
   }
 
+
 async function deleteFile(fileid){
   const deleteFile = await prisma.file.delete({
     where: {
@@ -215,6 +200,7 @@ async function deleteFile(fileid){
     }
   })
 }
+
 
 async function deleteFolder(folderid){
   const deleteFolder = await prisma.folder.delete({
@@ -224,8 +210,8 @@ async function deleteFolder(folderid){
   })
 }
 
+
 async function moveFilesToParent(folderId, parentFolderId){
-  
   const updateFiles = await prisma.file.updateMany({
     where: {
       folderId: folderId

@@ -1,30 +1,35 @@
 <div class="user-files">
+  <% if(parentFolder.id != locals.user.deskTopFolderId) { %>
+  <a class="back-button" href="/"
+    ><i class="fa-solid fa-circle-arrow-left"></i> Back</a
+  >
+
+  <% } %> <% if(locals.files) { %> <% files.forEach(file => {%>
+  <div class="edit-tile">
+    <a href="<%=file.pathway%>" download="<%=file.fileName%>" class="download" target="_blank">
      
-    <% if(parentFolder.id != locals.user.deskTopFolderId) { %>
-        <a class="back-button" href="/"><i class="fa-solid fa-circle-arrow-left"></i> Back</a>
-       
-    <% } %>
-    <% if(locals.files) { %>
-       <% files.forEach(file => {%>
-           <div class="edit-tile">
-      <a href="<%=file.pathway%>" download="<%=file.fileName%>" class="download">
-       
-         
-         <img class="thumbnail" src="<%=file.pathway%>">
-
-         <p>
-           <%=file.name%> 
-         </p>
-       
+      <% if(file.mimeType.match(/^image\/\w{3,4}/))  {%>
+      <img class="thumbnail" src="<%=file.pathway%>" />
+       <p><%=file.name%></p>
+      <% } else if(file.mimeType.match(/\/pdf/)) { %>
+  
+        <i class="fa-solid fa-file-pdf"></i>
+      <p> <%=file.name%></p>
+     <% } else if(file.mimeType.match(/video/)) { %>   
+     
+        <i class="fa-solid fa-file-video"></i>
+      <p> <%=file.name%></p>
+     <% } else if(file.mimeType.match(/msword/)) { %>  
+     
+        <i class="fa-solid fa-file-word"></i>
+      <p> <%=file.name%></p>
+     <% } else { %>   
       
-        <i class="fa-solid fa-download"></i>
-        
-       
-       
-          </a>
-          </div>  
-       <%  })%>
-    
-    <%}%>
+        <i class="fa-solid fa-file"></i>
+      <p> <%=file.name%></p>
+             <% } %>
+      <i class="fa-solid fa-download"></i>
+    </a>
+  </div>
+  <% })%> <%}%>
 </div>
-

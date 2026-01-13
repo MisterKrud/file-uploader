@@ -1,45 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-/>
-
-    <link rel="stylesheet" href="styles.css">
-  
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Log in/ Sign up</title>
-</head>
-<body>
+  </head>
 
-
-     <% if(locals.errors) { %>
-        <%- include("partials/errors") %>
-    <%}%>
-    <% if(!locals.user) { %>
-        <%- include("login") %>
-       
-    <%} else {%> 
-        <div class="user-header">
-            <div class="user-name">
+  <body>
+   
+    <% if(locals.errors) { %> <%- include("partials/errors") %> <%}%> <%
+    if(!locals.user) { %> <%- include("partials/login") %> <%} else {%>
+         <div class="container">
+    <div class="user-header">
+      <div class="user-name">
         <h3><%=locals.user.name%>'s files</h3>
-        <a href="/logout" class="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</a>
+        <a href="/logout" class="logout"
+          ><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</a>
+      </div>
+      <hr style="border: white solid 1px; width: 90%" />
+      <div class="header-menu">
+        <a href="/<%=parentFolder.id%>/edit-files" class="edit-button">
+          <i class="fa-solid fa-pen-to-square"></i> Edit files</a>
+        <div><%-include("partials/upload-form")%></div>
+      </div></div>
     </div>
-    <hr style="border: white solid 1px; width: 90%;">
-    <div class="header-menu">
-    
-    <a href="/<%=parentFolder.id%>/edit-files" class="edit-button"> <i class="fa-solid fa-pen-to-square"></i> Edit files</a>
-     <div>  <%-include("partials/upload-form")%></div>
-</div></div>
-
-    <%-include("partials/userFolders")%>
-
-    
-    <%-include("partials/userFiles")%>
-
-    
+    <%-include("partials/userFolders")%> <%-include("partials/userFiles")%>
     <%}%>
-</body>
+
+  </body>
 </html>

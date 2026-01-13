@@ -1,25 +1,24 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-/>
-    <link rel="stylesheet" href="/styles.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Edit files</title>
-</head>
-<body>
+  </head>
+  <body>
     <h3>Editing <%=locals.user.name%>'s files</h3>
-     <% if(parentFolder.id != locals.user.deskTopFolderId) { %>
-       
-        <h5><i class="fa-regular fa-folder-open"></i> ...<%=parentFolder.name%> </h5>
-    <% } %>
-     <a class="back-button" href="/"><i class="fa-solid fa-circle-arrow-left"></i> Back</a>
-    <%-include("partials/edit-folders")%>
-    <%-include("partials/edit-files")%>
-</body>
-</html>
+    <% if(parentFolder.id != locals.user.deskTopFolderId) { %>
 
+    <h5><i class="fa-regular fa-folder-open"></i> ...<%=parentFolder.name%></h5>
+    <% } %>
+    <a class="back-button" href="/"
+      ><i class="fa-solid fa-circle-arrow-left"></i> Back</a
+    >
+    <%-include("partials/edit-folders")%> <%-include("partials/edit-files")%>
+  </body>
+</html>

@@ -1,16 +1,6 @@
 <div class="upload-form">
 
- 
-  
-      <form class="upload-file" action="<%=parentFolder.id%>/upload" method="post" enctype="multipart/form-data">
-    <h3>Upload</h3>
-    <div class="upload-input-group">
-  <input type="file" name="avatar" />
-  <button type="submit"><i class="fa-solid fa-upload"></i> Upload</button>
-  </div>
-</form>
-
-<% if(parentFolder.id != locals.user.deskTopFolderId) { %>
+ <% if(parentFolder.id === locals.user.deskTopFolderId) { %>
 <form class="create-folder" action="/create-folder" method="POST">
   <h3>Create Folder</h3>
   <!-- <label for="folderName">Folder name</label> -->
@@ -20,4 +10,14 @@
   </div>
 </form>
 <% } %>
+  
+      <form class="upload-file" action="<%=parentFolder.id%>/upload" method="post" enctype="multipart/form-data">
+    <h3>Upload</h3>
+    <div class="upload-input-group">
+  <input type="file" name="avatar" />
+  <button type="submit"><i class="fa-solid fa-upload"></i> Upload</button>
+  </div>
+</form>
+
+
 </div>

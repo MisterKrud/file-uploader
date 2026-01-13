@@ -1,36 +1,38 @@
 <div class="user-files">
-   
-     
-    <% if(locals.files) { %>
-        
-       <% files.forEach(file => {%>
-      
-      
-        <div class="edit-tile">
-              <img class="thumbnail" src="<%=file.pathway%>">
-        
-<form action="/<%=file.id%>/update-filename" method="POST" class="update-name-form">
-         <input class="edit-name" type="text" name="filename" value="<%=file.name%>">
-         <button type="submit">save</button>
-            </form>
-       
-       
-      
-        <form action="/<%=file.id%>/delete-file" method="POST">
-   
-            <button type="submit" class="delete-file">❌</button>
-         </form>
-         <div class="details-container">
-         <ul class="file-details">
-            <li><span><strong>Size:</strong></span> <%=file.size%> bytes</li>
-            <li><span><strong>Created:</strong></span> <%=file.createdAt%></li>
-            <li><span><strong>File Type:</strong></span> <%=file.mimeType%></li>
-         </ul>
-         </div>
-      </div>
-         
-       <%  })%>
-    
-    <%}%>
+  <% if(locals.files) { %> <% files.forEach(file => {%>
+  <div class="edit-tile">
+    <img class="thumbnail" src="<%=file.pathway%>" />
+    <form
+      action="/<%=file.id%>/update-filename"
+      method="POST"
+      class="update-name-form"
+    >
+      <input
+        class="edit-name"
+        type="text"
+        name="filename"
+        value="<%=file.name%>"
+      />
+      <button type="submit">save</button>
+    </form>
 
+    <form action="/<%=file.id%>/delete-file" method="POST">
+      <button type="submit" class="delete-file">❌</button>
+    </form>
+    <div class="details-container">
+      <ul class="file-details">
+        <li>
+          <span><strong>Size:</strong></span> <%=file.size%> bytes
+        </li>
+        <li>
+          <span><strong>Created:</strong></span> <%=file.createdAt%>
+        </li>
+        <li>
+          <span><strong>File Type:</strong></span> <%=file.mimeType%>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <% })%> <%}%>
 </div>
