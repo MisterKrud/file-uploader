@@ -5,7 +5,7 @@ let pool
 if(process.env.NODE_ENV === "production"){
 
 pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.PG_CONNECTION_STRING,
   ssl: {
     rejectUnauthorized: false 
   },
