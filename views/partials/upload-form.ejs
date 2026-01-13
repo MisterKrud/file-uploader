@@ -10,7 +10,7 @@
   </div>
 </form>
 
-
+<% if(parentFolder.id != locals.user.deskTopFolderId) { %>
 <form class="create-folder" action="/create-folder" method="POST">
   <h3>Create Folder</h3>
   <!-- <label for="folderName">Folder name</label> -->
@@ -19,4 +19,5 @@
   <button type="submit"><i class="fa-solid fa-plus"></i> Create folder</button>
   </div>
 </form>
+<% } %>
 </div>

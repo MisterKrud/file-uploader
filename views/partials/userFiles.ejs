@@ -7,7 +7,7 @@
     <% if(locals.files) { %>
        <% files.forEach(file => {%>
            <div class="edit-tile">
-      <a href="<%=file.pathway%>" download="<%=file.fileName%>" class="download"></a>
+      <a href="<%=file.pathway%>" download="<%=file.fileName%>" class="download">
        
          
          <img class="thumbnail" src="<%=file.pathway%>">
@@ -21,7 +21,7 @@
         
        
        
-          
+          </a>
           </div>  
        <%  })%>
     

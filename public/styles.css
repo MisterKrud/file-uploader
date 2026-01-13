@@ -51,6 +51,18 @@ button{
   box-shadow: 1px 1px 2px rgb(189, 189, 189);
 }
 
+.back-button{
+ position: fixed;
+ left: 0;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ 
+ color: #4a90e2;
+
+ z-index: 4;
+}
+
 button:hover{
    background-color: white;
 }
@@ -331,7 +343,7 @@ input:hover, input:active{
  @media(max-width: 541px){
   .user-folders, .user-files{
     align-items: flex-start;
-    justify-content: center;
+    
   }
 
   user-name{
@@ -352,6 +364,8 @@ input:hover, input:active{
 
  
  }
+
+
 
  /* .create-folder input{
   display:block;
@@ -415,6 +429,7 @@ align-items: center;
 .user-folders, .user-files{
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 
 }
 

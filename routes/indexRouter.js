@@ -78,7 +78,7 @@ router.post("/:id/delete-file", userController.cloudinaryDelete, userController.
 
 router.post("/:id/update-filename", userController.updateFileName)
 router.post("/:folderId/delete-folder", userController.deleteFolder)
-router.post("/:folderId/delete-folder-files", userController.cloudinaryDeleteAllFolderFiles, userController.deleteFolderAndFiles)
+router.post("/:folderId/delete-folder-files", userController.cloudinaryDeleteFolderKeepFiles, userController.deleteFolderAndFiles)
 
 router.post("/:folderId/update-foldername", userController.updateFolderName)
 

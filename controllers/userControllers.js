@@ -29,12 +29,14 @@ const cloudinaryDelete = async(req, res, next) => {
    next()
 }
 
-const cloudinaryDeleteAllFolderFiles = async(req, res, next) => {
+const cloudinaryDeleteFolderKeepFiles = async(req, res, next) => {
    const parentFolder = await db.getParentFolder(Number(req.params.folderId))
    const files = await db.getAllFilesInFolder(parentFolder.id)
    const fileAssetIds = []
    files.forEach(file => fileAssetIds.push(file.storageKey))
    await cloudinary.api.delete_resources_by_asset_ids(fileAssetIds)
+   console.log("FILE ASSET IDS")
+   console.log(fileAssetIds)
    next()
 }
   
@@ -267,7 +269,7 @@ const updateFolderName = async(req, res) => {
    const folderId = file.folderId
    console.log('Deleting file', file)
    await db.deleteFile(fileId)
-   res.redirect(`/${folderId}`)
+   res.redirect(`/edit-files`)
  }
 
  
@@ -280,7 +282,7 @@ const updateFolderName = async(req, res) => {
       await db.moveFilesToParent(folderId, parentFolderId)
       await db.deleteFolder(folderId)
       console.log('Deleting folder', folder)
-      res.redirect(`/${parentFolderId}`)
+      res.redirect(`/edit-files`)
     
    }
   
@@ -293,7 +295,7 @@ const deleteFolderAndFiles = async(req, res, next) =>{
      
       await db.deleteFolderAndFiles(folderId)
       console.log('Deleting folder and files', folder)
-      res.redirect(`/${parentFolderId}`)
+      res.redirect(`/edit-files`)
     
    }
 
@@ -314,7 +316,7 @@ const deleteFolderAndFiles = async(req, res, next) =>{
    updateFolderName,
    deleteFolderAndFiles,
    cloudinaryDelete,
-   cloudinaryDeleteAllFolderFiles
+   cloudinaryDeleteFolderKeepFiles
 }
  
 
