@@ -1,15 +1,19 @@
-  <% if(Array.isArray(folders)) { %>
-<div class="user-folders">
+ 
+ <div class="user-folders">
+
+<% if(Array.isArray(folders)) { %>
+
 
 
   
        <% folders.forEach(folder => {%>
-        <div class="folders">
-         <a href="/<%=folder.id%>"><i class="fa-solid fa-folder"></i> <%=folder.name%></a>
+        <div class="edit-tile">
+         <a href="/<%=folder.id%>"><i class="fa-solid fa-folder lg-folder"></i> <br> <%=folder.name%></a>
          </div>
        <%  })%>
     
   
-</div>
+
   <%}%>
+  </div>
 

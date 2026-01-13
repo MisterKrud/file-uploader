@@ -6,8 +6,8 @@
        <% files.forEach(file => {%>
       
       
-        <figure>
-              <img class="thumbnail" src="../uploads/<%=file.storageKey%>">
+        <div class="edit-tile">
+              <img class="thumbnail" src="<%=file.pathway%>">
         
 <form action="/<%=file.id%>/update-filename" method="POST" class="update-name-form">
          <input class="edit-name" type="text" name="filename" value="<%=file.name%>">
@@ -22,12 +22,12 @@
          </form>
          <div class="details-container">
          <ul class="file-details">
-            <li><span><strong>Size:</strong></span> <%=file.size%></li>
+            <li><span><strong>Size:</strong></span> <%=file.size%> bytes</li>
             <li><span><strong>Created:</strong></span> <%=file.createdAt%></li>
             <li><span><strong>File Type:</strong></span> <%=file.mimeType%></li>
          </ul>
          </div>
-         </figure>
+      </div>
          
        <%  })%>
     

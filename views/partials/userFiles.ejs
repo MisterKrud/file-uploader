@@ -6,20 +6,23 @@
     <% } %>
     <% if(locals.files) { %>
        <% files.forEach(file => {%>
-      
-     
-            <figure>
-          <a href="<%=file.pathway%>" download="<%=file.fileName%>" class="download">
+           <div class="edit-tile">
+      <a href="<%=file.pathway%>" download="<%=file.fileName%>" class="download"></a>
+       
+         
          <img class="thumbnail" src="<%=file.pathway%>">
 
-         <figcaption>
+         <p>
            <%=file.name%> 
-         </figcaption>
+         </p>
        
       
         <i class="fa-solid fa-download"></i>
-         </figure>
-        </a>    
+        
+       
+       
+          
+          </div>  
        <%  })%>
     
     <%}%>

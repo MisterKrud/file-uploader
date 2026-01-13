@@ -4,15 +4,19 @@
   
       <form class="upload-file" action="<%=parentFolder.id%>/upload" method="post" enctype="multipart/form-data">
     <h3>Upload</h3>
+    <div class="upload-input-group">
   <input type="file" name="avatar" />
   <button type="submit"><i class="fa-solid fa-upload"></i> Upload</button>
+  </div>
 </form>
 
 
 <form class="create-folder" action="/create-folder" method="POST">
   <h3>Create Folder</h3>
   <!-- <label for="folderName">Folder name</label> -->
+   <div class="upload-input-group">
   <input type="text" name="folderName" id="folderName" placeholder="folder name">
   <button type="submit"><i class="fa-solid fa-plus"></i> Create folder</button>
+  </div>
 </form>
 </div>

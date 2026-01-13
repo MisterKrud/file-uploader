@@ -1,6 +1,18 @@
-
+:root{
+   height: 100vh;
+}
 body{
-  font-family:monospace
+  font-family:monospace;
+   display: flex;
+   width: 100%;
+ flex-direction: column;
+ align-items: center;
+ position:relative;
+ margin: 0 auto;
+ max-width: 1200px;
+ 
+
+ 
 }
 
 
@@ -45,6 +57,100 @@ button:hover{
 
 button:active{
   transform: translate(1px);
+}
+
+.user-header{
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: #4a90e2;
+  color: white;
+  /* padding-bottom: 1rem; */
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+  z-index: 2;
+}
+
+
+
+.user-name{
+  display: flex;
+ align-items: baseline;
+}
+
+.user-name a{
+  background-color: white;
+  color:#4a90e2;
+padding: .4rem;
+ margin-left: 1rem;
+ border-radius: 2px;
+ box-shadow: 2px 2px 2px rgb(206, 206, 206);
+ 
+}
+
+.edit-button{
+  background-color: white;
+  color:#4a90e2 !important;
+  
+padding: .4rem;
+height:min-content;
+ margin-left: 1rem;
+ border-radius: 2px;
+ box-shadow: 2px 2px 2px rgb(206, 206, 206);
+ 
+}
+
+.fa-pen-to-square{
+
+  color:#4a90e2;
+
+
+ 
+}
+
+
+
+
+.user-name a:hover{
+  color: white;
+  background-color: #4a90e2;
+  border: 1px solid white;
+}
+
+.user-name a:active{
+  
+  transform: translate(2px, 2px);
+}
+
+.header-menu{
+  display: flex;
+  padding-top: .5rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media(max-width: 980px){
+  .header-menu{
+    flex-direction: column;
+
+  }
+}
+
+
+.header-menu a{
+  color: white;
+}
+
+.header-menu div{
+  margin-right: 2rem;
+}
+
+
+.fa-arrow-right-from-bracket, .fa-pen-to-square{
+  font-size: 1rem;
 }
 
 .delete-file, .delete-folder{
@@ -176,19 +282,89 @@ input:hover, input:active{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+ 
+  bottom: 1rem;
+  background-color: #4a90e2;
+  width: 100%;
+  margin: 0;
+  z-index: 1;
   
+ }
+
+ .fa-upload, .fa-plus{
+  font-size: .6rem;
  }
 
  .upload-file, .create-folder{
   display: flex;
-  flex-direction: column;
-  justify-items: center;
-  align-items: center;
+  flex-direction: row;
+  justify-items: flex-start;
+  align-items: flex-start;
  
  }
 
- .create-folder>input{
-  display: inline;
+ @media(max-width: 475px ){
+ 
+  .upload-file, .create-folder{
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .upload-file h3, .create-folder h3{
+    margin-bottom: 0;
+    align-self: flex-start;
+  }
+   .header-menu{
+    align-items: flex-start;
+  }
+
+  .upload-file input, .create-folder input{
+    width:8rem;
+  }
+
+  .user-name{
+    justify-content: center;
+  }
+ }
+
+ @media(max-width: 541px){
+  .user-folders, .user-files{
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  user-name{
+    align-items: flex-start;
+  }
+ }
+
+ @media(max-width: 374px){
+  .upload-input-group{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+  }
+   .upload-file h3, .create-folder h3{
+    align-self: flex-start;
+  }
+
+ 
+ }
+
+ /* .create-folder input{
+  display:block;
+ } */
+
+ .upload-input-group{
+  display: flex;
+  align-items: baseline;
+ }
+
+ .upload-input-group button{
+height:fit-content;
+margin-left: 0;
  }
 
 .loginHeader{
@@ -216,10 +392,15 @@ align-items: center;
 .add-form{
   justify-self: flex-end;
 }
-.user-files{
-  display:flex;
-  flex-wrap: wrap;
-  /* justify-content: space-evenly; */
+
+
+.user-folders, .user-files{
+  z-index: 0;
+}
+
+.user-files figure,  .user-folders{
+  margin: 0
+  
 }
 .thumbnail{
   height: 6rem;
@@ -231,17 +412,17 @@ align-items: center;
  border: .1rem solid rgb(240, 240, 240);
  /* box-shadow: 1px 1px 2px gray; */
 }
-.user-folders{
+.user-folders, .user-files{
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+
 }
 
-figure, .edit-tile{
+ .edit-tile, .folder-tile{
   text-align: center;
   position: relative;
    width: 200px;
-  margin: 2rem;
+  margin:  1rem 2rem ;
   box-shadow: 2px 2px 4px 2px #c9c9c9;
   display: flex;
   flex-direction: column;
@@ -250,6 +431,12 @@ figure, .edit-tile{
   align-items: center;
 }
 
+
+
+.folder-tile a, figure a{
+  flex-direction: column;
+  margin: 0;
+}
 figure:hover{
   background-color:rgb(199, 212, 230);
 }
@@ -258,7 +445,7 @@ figure:hover>.fa-download{
   color: white;
 }
 
-figcaption{
+p{
   padding: .2rem;
 }
 
@@ -273,11 +460,6 @@ nav{
   margin: 1rem;
 }
 
-body{
- display: flex;
- flex-direction: column;
- align-items: center;
-}
 
 hr{
  height: .01rem;
