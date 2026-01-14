@@ -95,9 +95,9 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.SessionScalarFieldEnum = {
   id: 'id',
-  sid: 'sid',
   data: 'data',
-  expiresAt: 'expiresAt'
+  expiresAt: 'expiresAt',
+  sid: 'sid'
 };
 
 exports.Prisma.RoleScalarFieldEnum = {
@@ -108,9 +108,9 @@ exports.Prisma.RoleScalarFieldEnum = {
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   username: 'username',
-  password: 'password',
   name: 'name',
-  roleId: 'roleId'
+  roleId: 'roleId',
+  password: 'password'
 };
 
 exports.Prisma.FolderScalarFieldEnum = {
@@ -124,12 +124,12 @@ exports.Prisma.FolderScalarFieldEnum = {
 exports.Prisma.FileScalarFieldEnum = {
   id: 'id',
   folderId: 'folderId',
-  name: 'name',
   storageKey: 'storageKey',
   createdAt: 'createdAt',
   size: 'size',
-  pathway: 'pathway',
-  mimeType: 'mimeType'
+  mimeType: 'mimeType',
+  name: 'name',
+  pathway: 'pathway'
 };
 
 exports.Prisma.SortOrder = {
@@ -163,10 +163,10 @@ const config = {
   "clientVersion": "7.2.0",
   "engineVersion": "0c8ef2ce45c83248ab3df073180d5eda9e8be7a3",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Session {\n  id        String   @id\n  sid       String   @unique\n  data      String\n  expiresAt DateTime\n}\n\nmodel Role {\n  id    Int    @id @default(autoincrement())\n  name  String @unique\n  users User[]\n}\n\nmodel User {\n  id       Int      @id @default(autoincrement())\n  username String   @unique\n  password String\n  name     String\n  role     Role     @relation(fields: [roleId], references: [id])\n  roleId   Int      @default(1)\n  folders  Folder[]\n}\n\nmodel Folder {\n  id             Int      @id @default(autoincrement())\n  name           String\n  parentFolder   Folder?  @relation(\"SubFolders\", fields: [parentFolderId], references: [id])\n  parentFolderId Int?\n  childFolders   Folder[] @relation(\"SubFolders\")\n  shared         Boolean  @default(false)\n  user           User     @relation(fields: [userId], references: [id])\n  userId         Int\n  files          File[]\n}\n\nmodel File {\n  id         Int      @id @default(autoincrement())\n  folder     Folder?  @relation(fields: [folderId], references: [id])\n  folderId   Int?\n  name       String\n  storageKey String\n  createdAt  DateTime @default(now())\n  size       Int\n  pathway    String?\n  mimeType   String?\n}\n"
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Session {\n  id        String   @id\n  data      String\n  expiresAt DateTime\n  sid       String   @unique\n}\n\nmodel Role {\n  id    Int    @id @default(autoincrement())\n  name  String @unique\n  users User[]\n}\n\nmodel User {\n  id       Int      @id @default(autoincrement())\n  username String   @unique\n  name     String\n  roleId   Int      @default(1)\n  password String\n  folders  Folder[]\n  role     Role     @relation(fields: [roleId], references: [id])\n}\n\nmodel Folder {\n  id             Int      @id @default(autoincrement())\n  name           String\n  parentFolderId Int?\n  shared         Boolean  @default(false)\n  userId         Int\n  files          File[]\n  parentFolder   Folder?  @relation(\"SubFolders\", fields: [parentFolderId], references: [id])\n  childFolders   Folder[] @relation(\"SubFolders\")\n  user           User     @relation(fields: [userId], references: [id])\n}\n\nmodel File {\n  id         Int      @id @default(autoincrement())\n  folderId   Int?\n  storageKey String\n  createdAt  DateTime @default(now())\n  size       Int\n  mimeType   String?\n  name       String\n  pathway    String?\n  folder     Folder?  @relation(fields: [folderId], references: [id])\n}\n"
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sid\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"data\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Role\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"RoleToUser\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"object\",\"type\":\"Role\",\"relationName\":\"RoleToUser\"},{\"name\":\"roleId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"folders\",\"kind\":\"object\",\"type\":\"Folder\",\"relationName\":\"FolderToUser\"}],\"dbName\":null},\"Folder\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentFolder\",\"kind\":\"object\",\"type\":\"Folder\",\"relationName\":\"SubFolders\"},{\"name\":\"parentFolderId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"childFolders\",\"kind\":\"object\",\"type\":\"Folder\",\"relationName\":\"SubFolders\"},{\"name\":\"shared\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"FolderToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"files\",\"kind\":\"object\",\"type\":\"File\",\"relationName\":\"FileToFolder\"}],\"dbName\":null},\"File\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"folder\",\"kind\":\"object\",\"type\":\"Folder\",\"relationName\":\"FileToFolder\"},{\"name\":\"folderId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"storageKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"size\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"pathway\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"mimeType\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"data\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"sid\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"Role\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"RoleToUser\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"roleId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"folders\",\"kind\":\"object\",\"type\":\"Folder\",\"relationName\":\"FolderToUser\"},{\"name\":\"role\",\"kind\":\"object\",\"type\":\"Role\",\"relationName\":\"RoleToUser\"}],\"dbName\":null},\"Folder\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"parentFolderId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"shared\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"files\",\"kind\":\"object\",\"type\":\"File\",\"relationName\":\"FileToFolder\"},{\"name\":\"parentFolder\",\"kind\":\"object\",\"type\":\"Folder\",\"relationName\":\"SubFolders\"},{\"name\":\"childFolders\",\"kind\":\"object\",\"type\":\"Folder\",\"relationName\":\"SubFolders\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"FolderToUser\"}],\"dbName\":null},\"File\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"folderId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"storageKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"size\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"mimeType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"pathway\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"folder\",\"kind\":\"object\",\"type\":\"Folder\",\"relationName\":\"FileToFolder\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.compilerWasm = {
       getRuntime: async () => require('./query_compiler_bg.js'),

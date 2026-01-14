@@ -4,7 +4,6 @@ const LocalStrategy = require("passport-local").Strategy;
 const db = require("../db/queries")
 const prisma = require("../lib/prisma")
 
-
 passport.use(
     new LocalStrategy(async (username, password, done) => {
         try {
@@ -25,9 +24,11 @@ passport.use(
     })
 )
 
+
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
+
 
 passport.deserializeUser(async (id, done) => {
     try {
@@ -39,5 +40,6 @@ passport.deserializeUser(async (id, done) => {
         done(err)
     }
 });
+
 
 module.exports = passport;

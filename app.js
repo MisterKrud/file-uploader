@@ -1,24 +1,18 @@
 require("dotenv").config();
+console.log("CWD:", process.cwd());
+console.log("ENV:", process.env.DATABASE_URL);
 const express = require("express");
 const expressSession = require('express-session');
 const passport = require("passport");
 const middleware = require("./controllers/userControllers")
 const path = require("node:path");
 const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
-
 const prisma = require("./lib/prisma");
 
 
-// const upload = multer({ dest: 'uploads/' })
-
 const indexRouter = require("./routes/indexRouter");
-const folderRouter = require("./routes/folderRouter");
-// const pool = require("./db.pool")
 const app = express();
 const assetsPath = path.join(__dirname, "public");
-
-// const connectionString = process.env.DATABASE_URL
-// const adapter = new PrismaPg({ connectionString});
 
 
 app.set("views", path.join(__dirname, "views"));
@@ -54,7 +48,6 @@ app.use((req, res, next) => {
     res.locals.user = req.user;
     next();
 })
-// app.use("/folders", folderRouter)
 app.use("/", indexRouter);
 
 

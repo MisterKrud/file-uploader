@@ -9,9 +9,9 @@ datasource db {
 
 model Session {
   id        String   @id
-  sid       String   @unique
   data      String
   expiresAt DateTime
+  sid       String   @unique
 }
 
 model Role {
@@ -23,33 +23,33 @@ model Role {
 model User {
   id       Int      @id @default(autoincrement())
   username String   @unique
-  password String
   name     String
-  role     Role     @relation(fields: [roleId], references: [id])
   roleId   Int      @default(1)
+  password String
   folders  Folder[]
+  role     Role     @relation(fields: [roleId], references: [id])
 }
 
 model Folder {
   id             Int      @id @default(autoincrement())
   name           String
-  parentFolder   Folder?  @relation("SubFolders", fields: [parentFolderId], references: [id])
   parentFolderId Int?
-  childFolders   Folder[] @relation("SubFolders")
   shared         Boolean  @default(false)
-  user           User     @relation(fields: [userId], references: [id])
   userId         Int
   files          File[]
+  parentFolder   Folder?  @relation("SubFolders", fields: [parentFolderId], references: [id])
+  childFolders   Folder[] @relation("SubFolders")
+  user           User     @relation(fields: [userId], references: [id])
 }
 
 model File {
   id         Int      @id @default(autoincrement())
-  folder     Folder?  @relation(fields: [folderId], references: [id])
   folderId   Int?
-  name       String
   storageKey String
   createdAt  DateTime @default(now())
   size       Int
-  pathway    String?
   mimeType   String?
+  name       String
+  pathway    String?
+  folder     Folder?  @relation(fields: [folderId], references: [id])
 }

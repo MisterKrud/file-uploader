@@ -122,9 +122,9 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.SessionScalarFieldEnum = {
   id: 'id',
-  sid: 'sid',
   data: 'data',
-  expiresAt: 'expiresAt'
+  expiresAt: 'expiresAt',
+  sid: 'sid'
 };
 
 exports.Prisma.RoleScalarFieldEnum = {
@@ -135,9 +135,9 @@ exports.Prisma.RoleScalarFieldEnum = {
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   username: 'username',
-  password: 'password',
   name: 'name',
-  roleId: 'roleId'
+  roleId: 'roleId',
+  password: 'password'
 };
 
 exports.Prisma.FolderScalarFieldEnum = {
@@ -151,12 +151,12 @@ exports.Prisma.FolderScalarFieldEnum = {
 exports.Prisma.FileScalarFieldEnum = {
   id: 'id',
   folderId: 'folderId',
-  name: 'name',
   storageKey: 'storageKey',
   createdAt: 'createdAt',
   size: 'size',
-  pathway: 'pathway',
-  mimeType: 'mimeType'
+  mimeType: 'mimeType',
+  name: 'name',
+  pathway: 'pathway'
 };
 
 exports.Prisma.SortOrder = {

@@ -13,10 +13,8 @@ const storage = multer.diskStorage({
 })
 const upload = multer({storage: storage});
 
-
 router.get("/", (req, res) => res.send("Inside the folders"))
 router.get("/:id", (req, res) => res.render("index"))
-// router.post("/:id/upload", upload.single("avatar"), userController.uploadFile)
 
 
 module.exports = router
